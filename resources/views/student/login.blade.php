@@ -1,7 +1,7 @@
 @extends('layout.mainlayout')
 @section('content')
-    <section class="h-100  py-4 gradient-custom">
-        <div class="container py-5 h-100">
+    <section class="h-100  py-3 gradient-custom">
+        <div class="container py-2 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div class="card bg-transparent text-white" style="border-radius: 1.5rem; border:1px solid white;">
@@ -10,7 +10,7 @@
                             <form action="{{ route('student.signin') }}" method="post">
                                 @csrf
                                 <div class="mb-md-5 mt-md-4 pb-5">
-                                    <img src="../images/montage.png" alt="">
+                                    <img src="../images/logo.png" alt="" style="height: 10rem">
                                     <h2 class="fw-bold my-2 text-uppercase text-info">Student Login</h2>
                                     <p class="text-white-50 mb-5">Please enter your login and password!</p>
                                     @if ($errors->any())
@@ -25,13 +25,13 @@
                                     <div class="form-outline form-white mb-4">
                                         <input type="email" id="typeEmailX" placeholder="Email"
                                             class="form-control form-control-lg" name="email" />
-                                        <!-- <label class="form-label" for="typeEmailX">Email</label> -->
+                                        {{-- <label class="form-label" for="typeEmailX">Email</label> --}}
                                     </div>
 
                                     <div class="form-outline form-white mb-4">
                                         <input type="password" id="typePasswordX" placeholder="Password"
                                             class="form-control form-control-lg" name="password" />
-                                        <!-- <label class="form-label" for="typePasswordX">Password</label> -->
+                                        {{-- <label class="form-label" for="typePasswordX">Password</label> --}}
                                     </div>
 
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>

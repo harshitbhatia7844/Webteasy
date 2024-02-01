@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('city');
             $table->string('state');
-            $table->string('centre_id');
-            $table->string('branch_id');
+            $table->dateTime('dob');
             $table->timestamps();
         });
     }

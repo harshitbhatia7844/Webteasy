@@ -68,10 +68,6 @@ return [
     */
 
     'providers' => [
-        'centres' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Centre::class,
-        ],
         'students' => [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,

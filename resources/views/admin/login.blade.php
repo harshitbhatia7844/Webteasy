@@ -10,7 +10,7 @@
                             <form action="{{ route('admin.signin') }}" method="post">
                                 @csrf
                                 <div class="mb-md-5 mt-md-4 pb-5">
-                                    <img src="../images/montage.png" alt="">
+                                    <img src="../images/logo.png" alt="" style="height: 10rem">
                                     <h2 class="fw-bold my-3 text-uppercase text-info">Admin Login</h2>
                                     <p class="text-white-50 mb-5">Please enter your login and password!</p>
                                     @if ($errors->any())
@@ -40,16 +40,10 @@
                                         <!-- <label class="form-label" for="typePasswordX">Password</label> -->
                                     </div>
 
-                                    <p class="small mb-5 pb-lg-2"><a class="text-white-50"
-                                            href="{{ route('admin.forgotpassword') }}">Forgot password?</a></p>
-
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
 
                                 </div>
                                 <div>
-                                    {{-- <p class="mb-0">Don't have an account? <a href="{{ route('admin.register') }}"
-                                            class="text-white-50 fw-bold">Sign Up</a>
-                                        </p> --}}
                                     <p class="small mb-2 pb-lg-2"><a class="text-white-50"
                                             href="{{ route('welcome') }}">&larr; Back to Home</a></p>
                                 </div>

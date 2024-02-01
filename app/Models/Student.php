@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Stephenjude\Wallet\Interfaces\Wallet;
-use Stephenjude\Wallet\Traits\HasWallet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Authenticatable implements Wallet
+class Student extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,  HasWallet;
+    use HasApiTokens, HasFactory, Notifiable;
 }
