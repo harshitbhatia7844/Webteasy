@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
-use App\Models\branch;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -102,98 +101,6 @@ class AdminController extends Controller
             ->withErrors('User Not Exist.');
     }
 
-    //------------- Centre Registeration -------------//
-    public function store(Request $request)
-    {
-        $request->validate([
-            'centre_id' => 'required',
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'password_confirmation' => 'required_with:password|same:password',
-            'mobile_no' => 'required',
-            'contact_person' => 'required',
-            'contact_email' => 'required',
-            'contact_no' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-        ]);
-
-        $inserted = DB::table('centres')->insert([
-            'centre_id' => $request->centre_id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'mobile_no' => $request->mobile_no,
-            'contact_person' => $request->contact_person,
-            'contact_email' => $request->contact_email,
-            'contact_no' => $request->contact_no,
-            'city' => $request->city,
-            'state' => $request->state,
-            'password' => Hash::make($request->password),
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        DB::table('branches')->insert([
-            'branch_id' => $request->centre_id . '1001',
-            'name' => 'default',
-            'location' => 'default',
-            'status' => 0,
-            'centre_id' => $request->centre_id,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        if ($inserted) {
-            return redirect(route('admin.createcentre'))
-                ->withSuccess('Account has created successfully!');
-        }
-    }
-
-    //------------- Admin View All Branch -------------//
-    public function viewbranch(Request $request)
-    {
-        if ($request->centre_id) {
-            $branchs = DB::table('branches')
-                ->where('centre_id', $request->centre_id)
-                ->paginate(10);
-            return view('admin.viewbranch', ['items' => $branchs]);
-        }
-        $branchs = DB::table('branches')
-            ->paginate(10);
-        return view('admin.viewbranch', ['items' => $branchs]);
-    }
-
-    //-------------- Add Branch  ------------//
-    public function addbranch(Request $request)
-    {
-        $request->validate([
-            'branch_id' => 'required|max:255',
-            'name' => 'required|max:255',
-            'location' => 'required|max:255',
-            'centre_id' => 'required|max:255'
-        ]);
-        $inserted = DB::table('branches')->insert([
-            'branch_id' => $request->branch_id,
-            'name' => $request->name,
-            'location' => $request->location,
-            'status' => 0,
-            'centre_id' => $request->centre_id,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-
-        if ($inserted) {
-            return redirect(route('admin.createbranch'))
-                ->withSuccess('Branch have been Created successfully!');
-        }
-    }
-
-    //------------- Admin View All Centres -------------//
-    public function viewcentre()
-    {
-        $centres = DB::table('centres')->paginate(10);
-        return view('admin.viewcentre', ['items' => $centres]);
-    }
-
     //--------------Admin Dashboard ---------------//
     public function dashboard()
     {
@@ -218,55 +125,5 @@ class AdminController extends Controller
 
         return redirect()->route('admin.login')
             ->withErrors('Please login to access the dashboard.');
-    }
-
-    
-    //------------- Admin View All Activity-------------//
-    public function viewactivity()
-    {
-        $activity = DB::table('activitys')->paginate(10);
-        return view('admin.viewactivity', ['items' => $activity]);
-    }
-
-    
-    //------------- Admin Create Activity-------------//
-    public function createactivity()
-    {
-        $user = Auth::getUser();
-        $activity = DB::table('activitys')->orderBy('name')->get();
-        return view('admin.createactivity', ['items' => $activity]);
-    }
-
-    //------------- Adding Activity -------------//
-    public function addactivity(Request $request)
-    {
-        $user = Auth::getUser();
-        $inserted = DB::table('activitys')->insert([
-            'activity_id' => $request->activity,
-        ]);
-
-        if ($inserted) {
-            return redirect(route('admin.createactivity'))
-                ->withSuccess('Your Course have been Created successfully!');
-        }
-        return redirect(route('admin.createactivity'))
-            ->withErrors('Failed to Create Course');
-    }
-
-    //------------- Adding Activity -------------//
-    public function alocateactivity(Request $request)
-    {
-        $user = Auth::getUser();
-        $inserted = DB::table('activitylinks')->insert([
-            'centre_id' => $request->centre_id,
-            'activity_id' => $request->activity_id,
-        ]);
-
-        if ($inserted) {
-            return redirect(route('admin.createactivity'))
-                ->withSuccess('Your Course have been Created successfully!');
-        }
-        return redirect(route('admin.createactivity'))
-            ->withErrors('Failed to Create Course');
     }
 };

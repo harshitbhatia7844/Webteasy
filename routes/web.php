@@ -22,18 +22,8 @@ Route::prefix('/student')->name('student.')
 
             Route::get('/', 'dashboard')->name('index');
             Route::get('/', 'dashboard')->name('dashboard');
-            Route::get('/wallet', 'wallet')->name('wallet');
             Route::get('/profile', 'profile')->name('profile');
-            Route::get('/fees', 'fees')->name('fees');
-            Route::get('/present', 'present')->name('present');
-            Route::get('/paynow', 'paynow')->name('paynow');
-            Route::get('/batch', 'batch')->name('batch');
-            Route::get('/mycourse', 'mycourse')->name('mycourse');
-            Route::get('/viewcourse', 'viewcourse')->name('viewcourse');
             Route::get('/notification', 'notification')->name('notification');
-            Route::get('/attendance', 'attendance')->name('attendance');
-            Route::post('/withdraw', 'withdraw')->name('withdraw');
-            Route::post('/paynow1', 'paynow1')->name('paynow1');
             Route::view('/404', 'student.404')->name('404');
         });
 
@@ -53,28 +43,9 @@ Route::prefix('/centre')->name('centre.')
             Route::get('/', 'dashboard')->name('index');
             Route::get('/', 'dashboard')->name('dashboard');
             Route::get('/profile', 'profile')->name('profile');
-            Route::get('/addbranch', 'addbranch')->name('addbranch');
-            Route::get('/wallet', 'wallet')->name('wallet');
-            Route::get('/viewbatch', 'viewbatch')->name('viewbatch');
             Route::get('/notification', 'notification')->name('notification');
-            Route::get('/viewactivity', 'viewactivity')->name('viewactivity');
-            Route::get('/viewcourse', 'viewcourse')->name('viewcourse');
             Route::get('/viewstudent', 'viewstudent')->name('viewstudents');
-            Route::get('/viewbranch', 'viewbranch')->name('viewbranch');
-            Route::get('/createactivity', 'createactivity')->name('createactivity');
-            Route::any('/attendance', 'attendance')->name('attendance');
-            Route::post('/withdraw', 'withdraw')->name('withdraw');
-            Route::post('/store', 'store')->name('store');
-            Route::post('/addactivity', 'addactivity')->name('addactivity');
-            Route::post('/addbatch', 'addbatch')->name('addbatch');
             Route::post('/addnotification', 'addnotification')->name('addnotification');
-            Route::post('/addcourse', 'addcourse')->name('addcourse');
-            Route::post('/paynow', 'paynow')->name('paynow');
-            Route::post('/paynow1', 'paynow1')->name('paynow1');
-            Route::view('/createstudent', 'centres.createstudent')->name('createstudent');
-            Route::view('/createbatch', 'centres.createbatch')->name('createbatch');
-            Route::view('/createcourse', 'centres.createcourse')->name('createcourse');
-            Route::view('/createbranch', 'centres.createbranch')->name('createbranch');
             Route::view('/createnotification', 'centres.createnotification')->name('createnotification');
             Route::view('/404', 'centres.404')->name('404');
         });
@@ -99,15 +70,6 @@ Route::prefix('/admin')->name('admin.')
             Route::get('/', 'dashboard')->name('index');
             Route::get('/', 'dashboard')->name('dashboard');
             Route::get('/profile', 'profile')->name('profile');
-            Route::get('/viewactivity', 'viewactivity')->name('viewactivity');
-            Route::get('/viewcentre', 'viewcentre')->name('viewcentre');
-            Route::get('/viewbranch', 'viewbranch')->name('viewbranch');
-            Route::get('/createactivity', 'createactivity')->name('createactivity');
-            Route::post('/store', 'store')->name('store');
-            Route::post('/addactivity', 'addactivity')->name('addactivity');
-            Route::post('/addbranch', 'addbranch')->name('addbranch');
-            Route::view('/createcentre', 'admin.createcentre')->name('createcentre');
-            Route::view('/createbranch', 'admin.createbranch')->name('createbranch');
             Route::view('/404', 'admin.404')->name('404');
         });
 
@@ -120,11 +82,3 @@ Route::prefix('/admin')->name('admin.')
         Route::get('/logout', 'logout')->name('logout');
     });
 // Route for Admin ends here
-
-// Razorpay payment Route 
-Route::name('razorpay.')
-    ->controller(RazorpayController::class)
-    ->prefix('razorpay')
-    ->group(function () {
-        Route::post('handle-payment', 'handlePayment')->name('make.payment');
-    });
