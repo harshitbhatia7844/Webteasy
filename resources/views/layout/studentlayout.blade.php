@@ -58,72 +58,9 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseone"
-                    aria-expanded="true" aria-controls="collapseone">
-                    <i class="fa fa-book-open fa-fw"></i>
-                    <span>Courses</span>
-                </a>
-                <div id="collapseone" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Courses</h6>
-                        <a class="collapse-item" href={{ route('student.viewcourse') }}>All Courses</a>
-                        <a class="collapse-item" href={{ route('student.viewcourse') }}>My Courses</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix"
-                    aria-expanded="true" aria-controls="collapseSix">
-                    <i class="fa fa-book-open fa-fw"></i>
-                    <span>Batch</span>
-                </a>
-                <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">My Batch</h6>
-                        <a class="collapse-item" href={{ route('student.batch') }}>Recent Batch</a>
-                        <a class="collapse-item" href={{ route('student.batch') }}>Previous Batch</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
-                    aria-expanded="true" aria-controls="collapseSeven">
-                    <i class="fa fa-book-open fa-fw"></i>
-                    <span>Batch</span>
-                </a>
-                <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">My Batch</h6>
-                        <a class="collapse-item" href={{ route('student.batch') }}>Subjects</a>
-                        <a class="collapse-item" href={{ route('student.batch') }}>Previous Batch</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('student.fees') }}">
-                    <i class="fas fa-rupee-sign    "></i>
-                    <span>Fee Details</span></a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link" href="{{ route('student.notification') }}">
                     <i class="fa fa-bell" aria-hidden="true"></i>
                     <span>Notifications</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('student.attendance') }}">
-                    <i class="fa fa-book" aria-hidden="true"></i>
-                    <span>Attendance</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('student.wallet') }}">
-                    <i class="fas fa-wallet fa-fw"></i>
-                    <span>Wallet</span></a>
             </li>
 
             <li class="nav-item">
@@ -185,35 +122,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-wallet fa-2x text-gray-300"></i>
-                                <!-- Counter - Alerts -->
-
-                                {{-- <span class="badge badge-danger badge-counter"></span> --}}
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Wallet
-                                </h6>
-                                <a href="{{route('student.wallet')}}" class="dropdown-item d-flex align-items-center">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-dollar-sign text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500"></div>
-                                        <span class="font-weight-bold">Wallet Balance :
-                                            {{ Auth::user()->wallet_balance }}</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
 {{-- 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">

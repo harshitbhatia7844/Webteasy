@@ -58,68 +58,6 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Branches</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Branch</h6>
-                        <a class="collapse-item" href={{ route('centre.viewbranch') }}>My Branches</a>
-                        <a class="collapse-item" href={{ route('centre.createbranch') }}>Register Branch</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseActivity"
-                    aria-expanded="true" aria-controls="collapseActivity">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Activity</span>
-                </a>
-                <div id="collapseActivity" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Activity</h6>
-                        <a class="collapse-item" href={{ route('centre.viewactivity') }}>View Activity</a>
-                        <a class="collapse-item" href={{ route('centre.createactivity') }}>Add Activity</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
-                    aria-expanded="true" aria-controls="collapseFour">
-                    <i class="fa fa-book-open fa-fw"></i>
-                    <span>Courses</span>
-                </a>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Course</h6>
-                        <a class="collapse-item" href={{ route('centre.viewcourse') }}>View All Courses</a>
-                        <a class="collapse-item" href={{ route('centre.createcourse') }}>Register New Course</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
-                    aria-expanded="true" aria-controls="collapseFive">
-                    <i class="fa fa-book-open fa-fw"></i>
-                    <span>Batches</span>
-                </a>
-                <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Batch</h6>
-                        <a class="collapse-item" href={{ route('centre.viewbatch') }}>View All Batches</a>
-                        <a class="collapse-item" href={{ route('centre.createbatch') }}>Register New Batch</a>
-                    </div>
-                </div>
-            </li>
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                     aria-expanded="true" aria-controls="collapseThree">
@@ -149,19 +87,7 @@
                     </div>
                 </div>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('centre.attendance') }}">
-                    <i class="fas fa-wallet fa-fw"></i>
-                    <span>Attendance</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('centre.wallet') }}">
-                    <i class="fas fa-wallet fa-fw"></i>
-                    <span>Wallet</span></a>
-            </li>
-
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
 

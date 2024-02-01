@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -105,10 +103,7 @@ class AdminController extends Controller
     public function dashboard()
     {
         if (Auth::guard('admin')->check()) {
-            $centres = DB::table('centres')->count();
-            $branches = DB::table('branches')->count();
-            $payments = DB::table('payments')->sum('amount');
-            return view('admin.index', ['centres' => $centres, 'branches' => $branches, 'payments' => $payments]);
+            return view('admin.index');
         }
 
         return redirect()->route('admin.login')

@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -43,23 +40,7 @@ class StudentController extends Controller
     public function dashboard()
     {
         $user = Auth::getUser();
-        $today = DB::table('attendance')->where('student_id', $user->id)
-            ->where('date', date(today()))->count();
-        $balance = $user->wallet_balance;
-        $batch = DB::table('batches as b')
-            ->join('enrollments as e', 'b.batch_id', 'e.batch_id')
-            ->where('e.student_id', $user->id)->count();
-        $total = DB::table('attendance')->where('student_id', $user->id)->count();
-        $present = DB::table('attendance')->where('student_id', $user->id)
-            ->where('status', '1')->count();
-        $attendance = $present * 100 / ($total?:1);
-        $fees = DB::table('enrollments')->where('student_id', $user->id)->sum('amount');
-        return view('student.index', [
-            'fees' => $fees,
-            'batch' => $batch,
-            'attendance' => $attendance,
-            'balance' => $balance
-        ]);
+        return view('student.index');
     }
 
     //------------- Student Profile -------------//
@@ -72,18 +53,5 @@ class StudentController extends Controller
 
         return redirect()->route('admin.login')
             ->withErrors('Please login to access the dashboard.');
-    }
-
-    //------------- Notification -------------//
-    public function notification()
-    {
-        $user = Auth::getUser();
-        $general = DB::table('generalnotifications')->where('centre_id', $user->centre_id)->get();
-        $batch = DB::table('enrollments')->where('student_id', $user->id)->first();
-        $notis = DB::table('notifications')->where('batch_id', $batch?$batch->batch_id:'-1')->get();
-        return view('student.notification', [
-            'notification' => $notis,
-            'general' => $general
-        ]);
     }
 }

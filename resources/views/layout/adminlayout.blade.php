@@ -57,51 +57,6 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Centres</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Centre</h6>
-                        <a class="collapse-item" href="{{ route('admin.viewcentre') }}">View All Centres</a>
-                        <a class="collapse-item" href="{{ route('admin.createcentre') }}">Register Centre</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseone"
-                    aria-expanded="true" aria-controls="collapseone">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Branch</span>
-                </a>
-                <div id="collapseone" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Branch</h6>
-                        <a class="collapse-item" href="{{ route('admin.viewbranch') }}">View All Branch</a>
-                        <a class="collapse-item" href="{{ route('admin.createbranch') }}">Register Branch</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseActivity"
-                    aria-expanded="true" aria-controls="collapseActivity">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Activity</span>
-                </a>
-                <div id="collapseActivity" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Activity</h6>
-                        <a class="collapse-item" href={{ route('admin.viewactivity') }}>View Activity</a>
-                        <a class="collapse-item" href={{ route('admin.createactivity') }}>Add Activity</a>
-                    </div>
-                </div>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">

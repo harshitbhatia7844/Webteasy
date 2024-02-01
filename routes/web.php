@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CentreController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\RazorpayController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Attributes\Group;

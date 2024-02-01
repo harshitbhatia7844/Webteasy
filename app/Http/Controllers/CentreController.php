@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Centre;
-use App\Models\Student;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -108,18 +106,8 @@ class CentreController extends Controller
     {
         if (Auth::guard('centre')->check()) {
             $user = Auth::getUser();
-            $balance = $user->wallet_balance;
-            $branches = DB::table('branches')->where('centre_id', $user->centre_id)->count();
-            $fees = DB::table('enrollments as e')
-                ->join('batches', 'e.batch_id', 'batches.batch_id')
-                ->join('courses as c', 'batches.course_id', 'c.course_id')
-                ->join('branches as b', 'c.branch_id', 'b.branch_id')
-                ->where('b.centre_id', $user->centre_id)
-                ->sum('amount');
-            $students = DB::table('enrollments')->count();
-            return view('centres.index', ['students' => $students, 'branches' => $branches, 'fees' => $fees, 'balance' => $balance]);
+            return view('centres.index');
         }
-
         return redirect()->route('centre.login')
             ->withErrors('Please login to access the dashboard.');
     }
@@ -137,62 +125,10 @@ class CentreController extends Controller
     }
 
     //------------- Centre View All Students -------------//
-    public function viewstudent(Request $request)
+    public function viewstudent()
     {
-        if ($request->branch_id) {
-            $students = DB::table('students')
-                ->where('branch_id', $request->branch_id)
-                ->paginate(10);
-            return view('centres.viewstudents', ['items' => $students]);
-        } else if ($request->batch_id) {
-            $students = DB::table('students as s')
-                ->join('enrollments as e', 's.id', '=', 'e.student_id')
-                ->where('e.batch_id', $request->batch_id)
-                ->paginate(10);
-            return view('centres.viewstudents', ['items' => $students]);
-        }
         $user = Auth::getUser();
-        $students = DB::table('students')->where('centre_id', $user->centre_id)->paginate(10);
+        $students = DB::table('students')->paginate(10);
         return view('centres.viewstudents', ['items' => $students]);
-    }
-
-    //------------- Add Notification -------------//
-    public function addnotification(Request $request)
-    {
-        if ($request->general) {
-            $request->validate([
-                'general' => 'required'
-            ]);
-            DB::table('generalnotifications')->insert([
-                'centre_id' => Auth::getUser()->centre_id,
-                'notification' => $request->general,
-                'date' => date(now()),
-            ]);
-            return redirect(route('centre.createnotification'))
-                ->withSuccess('Your Notification have been Created successfully!');
-        }
-        $request->validate([
-            'batch_id' => 'required',
-            'notification' => 'required'
-        ]);
-        DB::table('notifications')->insert([
-            'batch_id' => $request->batch_id,
-            'notification' => $request->notification,
-            'date' => date(now()),
-        ]);
-        return redirect(route('centre.createnotification'))
-            ->withSuccess('Your Notification have been Created successfully!');
-    }
-
-    //------------- Notification -------------//
-    public function notification()
-    {
-        $user = Auth::getUser();
-        $general = DB::table('generalnotifications')->where('centre_id', $user->centre_id)->get();
-        $notis = DB::table('notifications')->get();
-        return view('centres.notification', [
-            'notification' => $notis,
-            'general' => $general
-        ]);
     }
 }
