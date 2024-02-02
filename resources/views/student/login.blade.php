@@ -23,9 +23,9 @@
                                         </div>
                                     @endif
                                     <div class="form-outline form-white mb-4">
-                                        <input type="email" id="typeEmailX" placeholder="Email"
-                                            class="form-control form-control-lg" name="email" />
-                                        {{-- <label class="form-label" for="typeEmailX">Email</label> --}}
+                                        <input type="text" id="typeroll_noX" placeholder="Muit Roll No."
+                                            class="form-control form-control-lg" name="roll_no" />
+                                        {{-- <label class="form-label" for="typeroll_noX">Roll No</label> --}}
                                     </div>
 
                                     <div class="form-outline form-white mb-4">
@@ -37,13 +37,20 @@
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
 
                                 </div>
+
+                                <div class="d-flex justify-content-evenly">
+                                    <p class="small"><a class="text-white-50" href="{{ route('student.register') }}">Create
+                                            an account</a></p>
+                                    <p class="small mb-2"><a class="text-white-50"
+                                            href="{{ route('student.forgetpassword') }}">Forget Password</a></p>
+                                </div>
                                 <div>
-                                    <p class="small mb-5 pb-lg-2"><a class="text-white-50"
+                                    <p class="small mb-3 pb-lg-2"><a class="text-white-50"
                                             href="{{ route('welcome') }}">&larr; Back to Home</a></p>
                                 </div>
 
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>

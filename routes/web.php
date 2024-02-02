@@ -24,6 +24,10 @@ Route::prefix('/student')->name('student.')
         });
 
         Route::view('/login', 'student.login')->name('login');
+        Route::view('/forgetpassword', 'student.forget-password')->name('forgetpassword');
+        Route::view('/register', 'student.register')->name('register');
+        Route::post('/signup', 'signup')->name('signup');
+        Route::post('/reset', 'reset')->name('reset');
         Route::post('/signin', 'authenticate')->name('signin');
         Route::get('/logout', 'logout')->name('logout');
     });

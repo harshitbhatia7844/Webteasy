@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
             $table->string('question');
-            $table->string('option1')->nullable();
-            $table->string('option2')->nullable();
-            $table->string('option3')->nullable();
-            $table->string('option4')->nullable();
+            $table->string('a')->nullable();
+            $table->string('b')->nullable();
+            $table->string('c')->nullable();
+            $table->string('d')->nullable();
             $table->string('answer');
             $table->timestamps();
         });

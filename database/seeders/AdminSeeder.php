@@ -20,8 +20,6 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('admin'),
             'mobile_no' => '9999999999',
             'status' => 1,
-            'city' => 'Ghaziabad',
-            'state' => 'Uttar Pradesh'
         ]);
     }
 }

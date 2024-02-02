@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedBigInteger('mobile_no')->unique();
             $table->integer('status');
-            $table->string('city');
-            $table->string('state');
             $table->timestamps();
         });
     }

@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('results', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('totalques');
-            $table->unsignedBigInteger('attemted');
-            $table->unsignedBigInteger('correct');
-            $table->unsignedBigInteger('score');
+            $table->string('student_roll_no');
+            $table->string('test_id');
+            $table->integer('total_questions');
+            $table->integer('attemted');
+            $table->integer('correct');
+            $table->integer('wrong');
+            $table->float('total_score');
             $table->timestamps();
         });
     }
