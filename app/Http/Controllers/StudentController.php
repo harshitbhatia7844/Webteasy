@@ -40,20 +40,28 @@ class StudentController extends Controller
     //------------- Student Dashboard -------------//
     public function dashboard()
     {
-        $user = Auth::getUser();
         return view('student.index');
     }
 
     //------------- Student Profile -------------//
     public function profile()
     {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::getUser();
-            return view('student.profile', $user);
-        }
+        $user = Auth::getUser();
+        return view('student.profile', $user);
+    }
 
-        return redirect()->route('admin.login')
-            ->withErrors('Please login to access the dashboard.');
+    //------------- Student Result -------------//
+    public function result()
+    {
+        return view('student.result');
+    }
+
+    //------------- Quiz -------------//
+    public function quiz()
+    {
+        $questions = DB::table('questions')
+            ->inRandomOrder()->limit(10)->get();
+        return view('student.Quiz', ['questions' => $questions]);
     }
 
     //------------- student Signup -------------//
@@ -108,8 +116,8 @@ class StudentController extends Controller
             'newpassword' => 'required'
         ]);
         if ($user = Student::where('email', $request->email)->first()) {
-            if ($user->dob == $request->dob) {
-                $inserted = DB::table('students')->update([
+            if ($request->dob == $user->dob) {
+                DB::table('students')->update([
                     'password' => Hash::make($request->newpassword),
                 ]);
                 return redirect(route('student.login'))

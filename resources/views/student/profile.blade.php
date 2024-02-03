@@ -11,6 +11,21 @@
                                 <div class="row align-items-center py-1">
                                     <div class="col-md-3 ps-2">
 
+                                        <h6 class="mb-0">Muit Roll No.</h6>
+
+                                    </div>
+                                    <div class="col-md-9 pe-2">
+
+                                        <h5>{{$roll_no}}</h5>
+
+                                    </div>
+                                </div>
+
+                                <hr class="mx-n3">
+
+                                <div class="row align-items-center py-1">
+                                    <div class="col-md-3 ps-2">
+
                                         <h6 class="mb-0">Name</h6>
 
                                     </div>
@@ -71,12 +86,12 @@
                                 <div class="row align-items-center py-1">
                                     <div class="col-md-3 ps-2">
                                         
-                                        <h6 class="mb-0">City</h6>
+                                        <h6 class="mb-0">Course</h6>
                                         
                                     </div>
                                     <div class="col-md-9 pe-2">
                                         
-                                        <h5>{{$city}}</h5>
+                                        <h5>{{$course}}</h5>
                                         
                                     </div>
                                 </div>
@@ -86,12 +101,27 @@
                                 <div class="row align-items-center py-1">
                                     <div class="col-md-3 ps-2">
                                         
-                                        <h6 class="mb-0">State</h6>
+                                        <h6 class="mb-0">Branch</h6>
                                         
                                     </div>
                                     <div class="col-md-9 pe-2">
                                         
-                                        <h5>{{$state}}</h5>
+                                        <h5>{{$branch}}</h5>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <hr class="mx-n3">
+
+                                <div class="row align-items-center py-1">
+                                    <div class="col-md-3 ps-2">
+                                        
+                                        <h6 class="mb-0">Semester</h6>
+                                        
+                                    </div>
+                                    <div class="col-md-9 pe-2">
+                                        
+                                        <h5>{{$semester}}</h5>
                                         
                                     </div>
                                 </div>

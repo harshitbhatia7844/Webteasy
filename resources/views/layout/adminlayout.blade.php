@@ -34,9 +34,9 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
                 href="{{ route('admin.dashboard') }}">
                 <div class="sidebar-brand-icon">
-                    <img src="../images/logo.png" alt="" style="height: 7rem">
+                    <img src="../images/logo.png" alt="" style="height: 5.5rem">
                 </div>
-                <div class="sidebar-brand-text mx-3">Admin</div>
+                {{-- <div class="sidebar-brand-text mx-3">Admin</div> --}}
             </a>
 
             <!-- Divider -->

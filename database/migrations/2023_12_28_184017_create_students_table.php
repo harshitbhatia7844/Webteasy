@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->string('roll_no')->primary();
+            $table->id();
+            $table->string('roll_no')->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->unsignedBigInteger('mobile_no')->unique();
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->string('course');
             $table->string('branch');
             $table->integer('semester');
-            $table->dateTime('dob');
+            $table->date('dob');
             $table->timestamps();
         });
     }

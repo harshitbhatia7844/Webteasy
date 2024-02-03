@@ -34,9 +34,9 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
                 href="{{ route('student.dashboard') }}">
                 <div class="sidebar-brand-icon ">
-                    <img src="../images/logo.png" alt="" style="height: 7rem">
+                    <img src="../images/logo.png" alt="" style="height: 5.5rem">
                 </div>
-                <div class="sidebar-brand-text mx-3">Student</div>
+                {{-- <div class="sidebar-brand-text mx-3">Student</div> --}}
             </a>
 
             <!-- Divider -->
@@ -58,6 +58,12 @@
             </div>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('student.select') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Quiz</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -69,6 +75,7 @@
                         <h6 class="collapse-header">Custom Settings</h6>
                         <a class="collapse-item" href={{ route('student.404') }}>Settings</a>
                         <a class="collapse-item" href={{ route('student.profile') }}>Porfile</a>
+                        <a class="collapse-item" href={{ route('student.aboutus') }}>About Us</a>
                         <hr>
                         <a class="collapse-item" href={{ route('student.logout') }}>Logout</a>
                     </div>
@@ -125,8 +132,7 @@
                                     Settings
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>

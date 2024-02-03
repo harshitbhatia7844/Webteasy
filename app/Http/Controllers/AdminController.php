@@ -18,7 +18,8 @@ class AdminController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials) && DB::table('admins')
+        if (
+            Auth::guard('admin')->attempt($credentials) && DB::table('admins')
             ->where('email', $request->email)
             ->value('status')    // check status of Admin
         ) {
@@ -38,37 +39,6 @@ class AdminController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('admin.login')
             ->withSuccess('You have logged out successfully!');
-    }
-
-    //------------- Admin Signup/Registration -------------//
-    public function signup(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'password' => 'required',
-            'mobile_no' => 'required',
-            'city' => 'required',
-            'state' => 'required'
-        ]);
-
-        $inserted = DB::table('admins')->insert([
-            'name' => $request->name,
-            'email' => $request->email,
-            'mobile_no' => $request->mobile_no,
-            'password' => Hash::make($request->password),
-            'status' => 0,
-            'city' => $request->city,
-            'state' => $request->state,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        if ($inserted) {
-            return redirect(route('admin.login'))
-                ->withSuccess('Your Account have been created successfully!');
-        } else {
-            return redirect(route('admin.register'));
-        }
     }
 
     //------------- Admin Reset Password -------------//
@@ -102,23 +72,13 @@ class AdminController extends Controller
     //--------------Admin Dashboard ---------------//
     public function dashboard()
     {
-        if (Auth::guard('admin')->check()) {
-            return view('admin.index');
-        }
-
-        return redirect()->route('admin.login')
-            ->withErrors('Please login to access the dashboard.');
+        return view('admin.index');
     }
 
     //--------------Admin Profile ---------------//
     public function profile()
     {
-        if (Auth::guard('admin')->check()) {
-            $user = Auth::getUser();
-            return view('admin.profile', $user);
-        }
-
-        return redirect()->route('admin.login')
-            ->withErrors('Please login to access the dashboard.');
+        $user = Auth::getUser();
+        return view('admin.profile', $user);
     }
 };

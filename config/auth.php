@@ -40,10 +40,6 @@ return [
             'driver' => 'session',
             'provider' => 'students',
         ],
-        'centre' => [
-            'driver' => 'session',
-            'provider' => 'centres',
-        ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
