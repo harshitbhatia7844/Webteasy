@@ -81,4 +81,27 @@ class AdminController extends Controller
         $user = Auth::getUser();
         return view('admin.profile', $user);
     }
+
+    //--------------Admin Profile ---------------//
+    public function viewtest()
+    {
+        $tests = DB::table('tests')->get();
+        return view('admin.viewtest', ['tests' => $tests]);
+    }
+
+    //--------------Admin Profile ---------------//
+    public function addtest(Request $request)
+    {
+        $total = DB::table('tests')->count();
+        DB::table('tests')->insert([
+            'test_id' => $total+1,
+            'name' => $request->name,
+            'duration' => $request->duration,
+            'date' => $request->date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+        ]);
+        return redirect(route('admin.createtest'))
+        ->withSuccess('Test has been created successfully!');
+    }
 };

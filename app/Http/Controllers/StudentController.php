@@ -121,7 +121,8 @@ class StudentController extends Controller
             $questions = DB::table('questions')
                 ->inRandomOrder()
                 ->limit(10)->get();
-            return view('student.Quiz', ['questions' => $questions,  'test' => $test]);
+            $a = Carbon::parse($test->end_time)->getTimestampMs();
+            return view('student.Quiz', ['questions' => $questions,  'test' => $test, 'a' => $a]);
         }
         return  redirect(route('student.select'));
     }

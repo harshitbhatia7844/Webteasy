@@ -131,7 +131,7 @@
 
             // Get today's date and time
             var now = new Date().getTime();
-            var distance = countDownDate - now;
+            var distance = {{$a}} - now;
 
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
