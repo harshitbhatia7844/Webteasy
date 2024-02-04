@@ -3,7 +3,7 @@
     <form action="{{ route('admin.signin') }}" method="post">
         @csrf
         <div class="mb-md-5 mt-md-4 pb-5">
-            <img src="../images/logo.png" alt="" style="height: 10rem">
+            <img src="{{ asset('images/logo.png')}}" alt="" style="height: 10rem">
             <h2 class="fw-bold my-3 text-uppercase text-info">Admin Login</h2>
             <p class="text-white-50 mb-5">Please enter your login and password!</p>
             @if ($errors->any())

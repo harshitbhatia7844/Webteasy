@@ -14,14 +14,15 @@
                 <h2 class="mb-4">Instructions</h2>
                 <ul class="list-group">
                     <li class="list-group-item">This test is only MCQ based.</li>
-                    <li class="list-group-item">Select only one answer for each question.</li>
-                    <li class="list-group-item">The test shall have 20 questions.</li>
-                    <li class="list-group-item">Each question carries 1 mark</li>
-                    <li class="list-group-item">Marking Scheme +1 mark for correct answer and -0.25 marks for wrong answer.
+                    <li class="list-group-item">Only one correct answer for each question.</li>
+                    <li class="list-group-item">The test shall consists of 20 questions.</li>
+                    <li class="list-group-item">Marking Scheme <span class="text-success">+1</span> mark for correct answer
+                        and <span class="text-danger">-0.25</span> marks for wrong answer.
                     </li>
                     <li class="list-group-item">You cannot change your answer once it's submitted.</li>
+                    <li class="list-group-item">Do not refresh or leave the page during the test otherwise you will have to start again from the first question.</li>
                     <li class="list-group-item">The timer will start once you begin the test.</li>
-                    <li class="list-group-item">The timer will start once you begin the quiz.</li>
+                    <li class="list-group-item">Test will automatically submit after the completion of time.</li>
                 </ul>
                 <div class="mt-4">
                     <a href="{{ route('student.quiz') }}"><button class="btn btn-primary">Continue to Start

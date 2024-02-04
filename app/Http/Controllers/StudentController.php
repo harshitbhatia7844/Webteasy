@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,17 +52,78 @@ class StudentController extends Controller
     }
 
     //------------- Student Result -------------//
-    public function result()
+    public function result(Request $request)
     {
-        return view('student.result');
+        // dd($request);
+        $user = Auth::getUser();
+        $test = DB::table('tests')->first();
+        $result = DB::table('results')
+            ->where('student_roll_no', '=', $user->roll_no)
+            ->where('test_id', '=', $test->test_id)
+            ->first();
+        if (!$result) {
+            $atemted = 0;
+            $correct = 0;
+            $wrong = 0;
+            $i = 1;
+            $j = 1;
+            $total = $request->count;
+            while ($j <= $total) {
+                $qid = $request->input('ques' . $i);
+                $ans = $request->input('option' . $i++);
+                $answer = DB::table('questions')->where('id', $qid)->value('answer');
+                if ($ans) {
+                    $atemted++;
+                    if ($ans == $answer) {
+                        $correct++;
+                    } else if ($ans != $answer) {
+                        $wrong++;
+                    }
+                }
+                $j++;
+            }
+            $score = $correct * 1 - $wrong * 0.25;
+            DB::table('results')->insert([
+                "student_roll_no" => $user->roll_no,
+                'test_id' => $test->test_id,
+                'total_questions' => $total,
+                'attemted' =>  $atemted,
+                'correct' => $correct,
+                'wrong' =>  $wrong,
+                'total_score' =>  $score,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            $result = DB::table('results')
+                ->where('student_roll_no', '=', $user->roll_no)
+                ->where('test_id', '=', $test->test_id)
+                ->first();
+            $rank = DB::table('results')
+                ->where('test_id', '=', $test->test_id)
+                ->where('total_score', '>', $score)->count();
+                $total = DB::table('results')
+            ->where('test_id', '=', $test->test_id)->count();
+            return view('student.result', ['r' => $result, 's' => 1, 'rank' => $rank+1, 'total' =>$total]);
+        }
+        $rank = DB::table('results')
+            ->where('test_id', '=', $test->test_id)
+            ->where('total_score', '>', $result->total_score)->count();
+        $total = DB::table('results')
+            ->where('test_id', '=', $test->test_id)->count();
+        return view('student.result', ['r' => $result, 's' => 0, 'rank' => $rank+1, 'total' =>$total]);
     }
 
     //------------- Quiz -------------//
     public function quiz()
     {
-        $questions = DB::table('questions')
-            ->inRandomOrder()->limit(10)->get();
-        return view('student.Quiz', ['questions' => $questions]);
+        $test = DB::table('tests')->first();
+        if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))){
+            $questions = DB::table('questions')
+                ->inRandomOrder()
+                ->limit(10)->get();
+            return view('student.Quiz', ['questions' => $questions,  'test' => $test]);
+        }
+        return  redirect(route('student.select'));
     }
 
     //------------- student Signup -------------//

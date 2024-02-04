@@ -3,7 +3,7 @@
     <form action={{ route('student.reset') }} method="post">
         @csrf
         <div class="mb-md-5 mt-md-4 pb-5">
-            <img src="../images/logo.png" alt="" style="height: 10rem">
+            <img src="{{ asset('images/logo.png')}}" alt="" style="height: 10rem">
             <h2 class="fw-bold my-3 pb-5 text-uppercase text-info">Reset Password</h2>
             @if ($errors->any())
                 <div class="alert alert-danger">

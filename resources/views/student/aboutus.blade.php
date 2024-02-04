@@ -38,12 +38,12 @@
           <li class="list-group-item"><strong>Robust Security:</strong> We prioritize data protection and privacy, ensuring a secure environment for all users.</li>
         </ul>
         <h2 class="text-center fw-bold mt-4">Teacher's Guidance</h2>
-        <p class="mt-3"><strong>Teacher Name:</strong> Professor Dr. Awakash Mishra</p>
+        <p class="mt-3"><strong>Teacher Name:</strong> Professor Dr. Awakash Mishra (Dean-SoET)</p>
         <p>Our quizzes are designed under the expert guidance of Professor Dr. Awakash Mishra, ensuring that they align with educational standards and promote meaningful learning.</p>
         <h2 class="text-center fw-bold mt-4">Meet the Team</h2>
-        <p class="mt-3"><strong>Harshit Bhatia</strong> - Co-Founder and Quiz Master</p>
-        <p><strong>Preeti Verma</strong> - Lead Developer</p>
-        <p><strong>Swarnika Singh</strong> - Graphic Designer</p>
+        <p class="mt-3"><strong>Harshit Bhatia</strong> - Project Manager & Backend Developer</p>
+        <p><strong>Preeti Verma</strong> - Frontend & Database Developer</p>
+        <p><strong>Swarnika Singh</strong> - Graphic Designer & Front End Developer</p>
     
         <h2 class="text-center fw-bold mt-4">Contact Us</h2>
         <p class="mt-3">Have questions or suggestions? Feel free to reach out to us at <a href="mailto:info@quizapp.com">info@quizapp.com</a>.</p>

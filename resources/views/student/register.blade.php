@@ -3,7 +3,7 @@
     <form action="{{ route('student.signup') }}" method="post">
         @csrf
         <div class="mb-md-5 mt-md-4 pb-5">
-            <img src="../images/logo.png" alt="" style="height: 10rem">
+            <img src="{{ asset('images/logo.png')}}" alt="" style="height: 10rem">
             <h2 class="fw-bold mb-4 text-uppercase text-info">Student Register</h2>
             @if ($errors->any())
                 <div class="alert alert-danger">
