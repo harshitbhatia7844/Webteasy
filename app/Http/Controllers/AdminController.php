@@ -117,7 +117,9 @@ class AdminController extends Controller
     //--------------Admin Profile ---------------//
     public function viewtest()
     {
-        $tests = DB::table('tests')->get();
+        $tests = DB::table('tests')
+        ->orderByDesc('date')
+        ->get();
         return view('admin.viewtest', ['tests' => $tests]);
     }
 
