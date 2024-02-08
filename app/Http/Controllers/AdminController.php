@@ -82,6 +82,38 @@ class AdminController extends Controller
         return view('admin.profile', $user);
     }
 
+    //------------- Admin View All Students -------------//
+    public function viewstudent(Request $request)
+    {
+        if ($request->course && $request->branch && $request->semester) {
+            $students = DB::table('students')
+                ->where('course', $request->course)
+                ->where('branch', $request->branch)
+                ->where('semester', $request->semester)
+                ->paginate(10);
+            return view('admin.viewstudents', ['items' => $students]);
+        }
+        $students = DB::table('students')->paginate(10);
+        return view('admin.viewstudents', ['items' => $students]);
+    }
+
+    //------------- Admin View All Students -------------//
+    public function viewresults(Request $request)
+    {
+        if ($request->test_id) {
+            $students = DB::table('results as r')->where('test_id', $request->test_id)
+                ->join('students as s', 'r.student_roll_no', 's.roll_no')
+                ->orderByDesc('total_score')
+                ->paginate(10);
+            return view('admin.viewresults', ['items' => $students]);
+        }
+        $students = DB::table('results as r')
+            ->join('students as s', 'r.student_roll_no', 's.roll_no')
+            ->orderByDesc('total_score')
+            ->paginate(10);
+        return view('admin.viewresults', ['items' => $students]);
+    }
+
     //--------------Admin Profile ---------------//
     public function viewtest()
     {
@@ -90,11 +122,18 @@ class AdminController extends Controller
     }
 
     //--------------Admin Profile ---------------//
+    public function viewquestions()
+    {
+        $items = DB::table('questions')->paginate();
+        return view('admin.viewquestions', ['items' => $items]);
+    }
+
+    //--------------Admin Profile ---------------//
     public function addtest(Request $request)
     {
         $total = DB::table('tests')->count();
         DB::table('tests')->insert([
-            'test_id' => $total+1,
+            'test_id' => $total + 1,
             'name' => $request->name,
             'duration' => $request->duration,
             'date' => $request->date,
@@ -102,6 +141,6 @@ class AdminController extends Controller
             'end_time' => $request->end_time,
         ]);
         return redirect(route('admin.createtest'))
-        ->withSuccess('Test has been created successfully!');
+            ->withSuccess('Test has been created successfully!');
     }
 };

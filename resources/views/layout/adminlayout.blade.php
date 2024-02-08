@@ -58,9 +58,27 @@
             </div>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.viewstudents') }}">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span>View Students</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.viewresults') }}">
+                    <i class="fas fa-book-open    "></i>
+                    <span>View Results</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.viewquestions') }}">
+                    <i class="fa fa-question" aria-hidden="true"></i>
+                    <span>View Questions</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa fa-book" aria-hidden="true"></i>
                     <span>Tests</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">

@@ -45,7 +45,10 @@ Route::prefix('/admin')->name('admin.')
             Route::get('/', 'dashboard')->name('index');
             Route::get('/', 'dashboard')->name('dashboard');
             Route::get('/profile', 'profile')->name('profile');
+            Route::get('/viewstudent', 'viewstudent')->name('viewstudents');
             Route::get('/viewtest', 'viewtest')->name('viewtest');
+            Route::get('/viewresults', 'viewresults')->name('viewresults');
+            Route::get('/viewquestions', 'viewquestions')->name('viewquestions');
             Route::post('/addtest', 'addtest')->name('addtest');
             Route::view('/404', 'admin.404')->name('404');
             Route::view('/createtest', 'admin.createtest')->name('createtest');
