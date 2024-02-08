@@ -1,12 +1,5 @@
 @extends('layout.quizlayout')
 @section('content')
-    <nav class="navbar bg-primary">
-        <div class="container-fluid mx-5">
-            <a class="navbar-brand  text-white" href="#">
-                Online Quiz System
-            </a>
-        </div>
-    </nav>
     <div class="outer m-5 row align-center justify-content-center">
         <div class="h-25 w-75 m-1 text-center">
             <h2 class="mb-4">BTECH-CS Mix Test</h2>

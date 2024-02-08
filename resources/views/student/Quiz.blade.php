@@ -2,13 +2,6 @@
 @section('content')
     <form action="{{ route('student.result') }}" method="post">
         @csrf
-        <nav class="navbar bg-primary">
-            <div class="container-fluid">
-                <a class="navbar-brand text-white" href="#">
-                    Online Quiz System
-                </a>
-            </div>
-        </nav>
         <div class="container mt-3">
             <div class="header">
                 <div class="navbar">
@@ -27,7 +20,7 @@
                         $label = 1;
                     @endphp
                     @foreach ($questions as $q)
-                        <div class="border rounded-2 w-100 overflow-scroll" id="question{{ $count + 1 }}"
+                        <div class="border rounded-2 w-100" id="question{{ $count + 1 }}"
                             style="display:@if ($count + 1 == 1) block @else none @endif; max-height: 60vh;">
                             <div class="d-flex" id="{{ ++$count }}">
                                 <div class="type m-2 px-3 py-2">
@@ -166,6 +159,7 @@
             var btn = document.getElementById('btn' + questionNumber);
             if (answeredQuestions.includes(questionNumber)) {
                 btn.style.backgroundColor = 'green';
+                btn.style.Color = 'white';
             } else {
                 btn.style.backgroundColor = 'red'; // Set to default color when showing the question
             }
@@ -193,6 +187,7 @@
             // Update the button color based on whether an option is selected or not
             var btn = document.getElementById('btn' + questionNumber);
             btn.style.backgroundColor = optionSelected ? 'green' : 'red';
+            btn.style.color = 'white';
             ({{$count}}==questionNumber)?'':showQuestion(questionNumber+1);
             if (optionSelected) {
             answeredQuestions.push(questionNumber);

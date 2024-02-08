@@ -116,7 +116,7 @@ class StudentController extends Controller
     //------------- Quiz -------------//
     public function quiz()
     {
-        $test = DB::table('tests')->first();
+        $test = DB::table('tests')->where('test_id', 2)->first();
         if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))){
             $questions = DB::table('questions')
                 ->inRandomOrder()

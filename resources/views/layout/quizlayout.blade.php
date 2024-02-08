@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="{{ asset('css/quiz.css')}}">
 </head>
 <body>
+    <nav class="navbar bg-primary">
+        <div class="container-fluid mx-5">
+            <a class="navbar-brand text-white" href="#">
+                Online Quiz System
+            </a>
+            <p class="nav-link text-white">{{ Auth::user()->name }}</p>
+        </div>
+        
+    </nav>
     @yield('content')
 </body>
 </html>
