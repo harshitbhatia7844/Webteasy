@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('welcome');
 
-Route::fallback(function () { return view('/404'); });
+Route::fallback(function () {
+    return view('/404');
+});
 
 // Route for Student starts here
 Route::prefix('/student')->name('student.')
@@ -49,6 +51,7 @@ Route::prefix('/admin')->name('admin.')
             Route::get('/viewtest', 'viewtest')->name('viewtest');
             Route::get('/viewresults', 'viewresults')->name('viewresults');
             Route::get('/viewquestions', 'viewquestions')->name('viewquestions');
+            Route::get('download-pdf', 'downloadPDF')->name('download-pdf');
             Route::post('/addtest', 'addtest')->name('addtest');
             Route::view('/404', 'admin.404')->name('404');
             Route::view('/createtest', 'admin.createtest')->name('createtest');
