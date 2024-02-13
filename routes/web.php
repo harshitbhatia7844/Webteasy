@@ -24,7 +24,7 @@ Route::prefix('/student')->name('student.')
             Route::get('/quiz', 'quiz')->name('quiz');
             Route::post('/result', 'result')->name('result');
             Route::view('/select', 'student.select')->name('select');
-            Route::view('/404', 'student.404')->name('404');
+            Route::get('/404', 'testpage')->name('404');
             Route::view('/aboutus', 'student.aboutus')->name('aboutus');
         });
 

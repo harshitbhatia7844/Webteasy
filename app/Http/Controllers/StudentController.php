@@ -101,23 +101,23 @@ class StudentController extends Controller
             $rank = DB::table('results')
                 ->where('test_id', '=', $test->test_id)
                 ->where('total_score', '>', $score)->count();
-                $total = DB::table('results')
-            ->where('test_id', '=', $test->test_id)->count();
-            return view('student.result', ['r' => $result, 's' => 1, 'rank' => $rank+1, 'total' =>$total]);
+            $total = DB::table('results')
+                ->where('test_id', '=', $test->test_id)->count();
+            return view('student.result', ['r' => $result, 's' => 1, 'rank' => $rank + 1, 'total' => $total]);
         }
         $rank = DB::table('results')
             ->where('test_id', '=', $test->test_id)
             ->where('total_score', '>', $result->total_score)->count();
         $total = DB::table('results')
             ->where('test_id', '=', $test->test_id)->count();
-        return view('student.result', ['r' => $result, 's' => 0, 'rank' => $rank+1, 'total' =>$total]);
+        return view('student.result', ['r' => $result, 's' => 0, 'rank' => $rank + 1, 'total' => $total]);
     }
 
     //------------- Quiz -------------//
     public function quiz()
     {
-        $test = DB::table('tests')->where('test_id', 2)->first();
-        if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))){
+        $test = DB::table('tests')->where('test_id', 1)->first();
+        if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))) {
             $questions = DB::table('questions')
                 ->inRandomOrder()
                 ->limit(10)->get();
@@ -126,6 +126,22 @@ class StudentController extends Controller
         }
         return  redirect(route('student.select'));
     }
+
+    //------------- test page -------------//
+    public function testpage()
+    {
+        $currentTime = now();
+        $currentDate = $currentTime->toDateString(); // Get the current date
+
+        $activeTest = DB::table('tests')
+            ->whereDate('date', '=', $currentDate) // Check if current date matches
+            ->where('start_time', '<=', $currentTime)
+            ->where('end_time', '>=', $currentTime)
+            ->first();
+
+        return view('student.404', compact('activeTest'));
+    }
+
 
     //------------- student Signup -------------//
     public function signup(Request $request)
