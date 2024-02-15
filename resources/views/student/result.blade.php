@@ -5,21 +5,12 @@
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading m-3">
-                        <h1 class="text-center m-2">Your Exam Score</h1>
+                        <h1 class="text-center m-2">Your Exam Scorecard</h1>
                     </div>
                     <div class="panel-body" style="">
-                        {{-- <ul class="list-group mb-5">
-                            <li class="list-group-item">
-                                <h4 style="text-align: center;color:#069;">Subject Name : <span
-                                        style="color:#000;">Subject</span></h4>
-                                <h4 style="text-align: center;color:#069;">Paper Name : <span style="color:#000;">Paper
-                                    </span></h4>
-                            </li>
-                            
-                        </ul> --}}
                         <ul class="list-group mb-5">
                             <li class="list-group-item">
-                                <h4 style="text-align: center;color:#069;">Course : <span style="color:#000;">BTECH-CSE
+                                <h4 style="text-align: center;color:#069;">Course : <span style="color:#000;">BTECH/Diploma/BCA
                                     </span></h4>
                                 <h4 style="text-align: center;color:#069;">Paper : <span style="color:#000;">Test1-Mix Test
                                     </span></h4>
@@ -46,7 +37,7 @@
                             </li>
                             <li class="list-group-item">
                                 <h4 style="text-align:center;"><span style="color:#069;">Your Score %age</span> :
-                                    {{ ($r->total_score * 100) / $r->total_questions ?: 1 }}% <span style="color:#069;">out
+                                    {{ round(($r->total_score * 100) / $r->total_questions ?: 1,2) }}% <span style="color:#069;">out
                                         of</span> 100% </h4>
                             </li>
                             <li class="list-group-item">
@@ -65,8 +56,7 @@
                                 </li>
                             @endif
                             <li class="list-group-item">
-                                <a href="{{ route('student.dashboard') }}"><button class="btn btn-primary"> Back to
-                                        Dashboard </button></a>
+                                <a href="{{ route('student.feedback') }}?test_id={{$test_id}}"><button class="btn btn-primary"> Next -> </button></a>
                             </li>
                         </ul>
                     </div>

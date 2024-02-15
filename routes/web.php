@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,7 +24,10 @@ Route::prefix('/student')->name('student.')
             Route::get('/profile', 'profile')->name('profile');
             Route::get('/quiz', 'quiz')->name('quiz');
             Route::post('/result', 'result')->name('result');
-            Route::view('/select', 'student.select')->name('select');
+            Route::post('/savefeedback', 'savefeedback')->name('savefeedback');
+            Route::get('/select', 'select')->name('select');
+            Route::get('/viewtests', 'viewtests')->name('viewtests');
+            Route::get('/feedback', 'feedback')->name('feedback');
             Route::view('/404', 'student.404')->name('404');
             Route::view('/aboutus', 'student.aboutus')->name('aboutus');
         });

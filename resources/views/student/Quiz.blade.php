@@ -5,7 +5,7 @@
         <div class="container mt-3">
             <div class="header">
                 <div class="navbar">
-                    <h2>Course : BTECH-CSE</h2>
+                    <h2>Course : BTECH/Diploma/BCA</h2>
                     {{-- <button class="btn btn-primary">Submit Test</button> --}}
                 </div>
                 <div class="navbar px-3 m-4">
@@ -22,16 +22,22 @@
                     @foreach ($questions as $q)
                         <div class="border rounded-2 w-100" id="question{{ $count + 1 }}"
                             style="display:@if ($count + 1 == 1) block @else none @endif; max-height: 60vh;">
-                            <div class="d-flex" id="{{ ++$count }}">
-                                <div class="type m-2 px-3 py-2">
-                                    {{ $count }}
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex" id="{{ ++$count }}">
+                                    <div class="type m-2 px-3 py-2">
+                                        {{ $count }}
+                                    </div>
+                                    <div class="type m-2 px-3 py-2">
+                                        Marks: <span class="text-success">+1 </span> , <span
+                                            class="text-danger">-0.25</span>
+                                    </div>
+                                    <div class="type m-2 px-3 py-2">
+                                        Type: MCQ
+                                    </div>
                                 </div>
-                                <div class="type m-2 px-3 py-2">
-                                    Marks: <span class="text-success">+1 </span> , <span class="text-danger">-0.25</span>
-                                </div>
-                                <div class="type m-2 px-3 py-2">
-                                    Type: MCQ
-                                </div>
+                                <label class="btn btn-outline-secondary m-2 px-3 py-2" for="optionclear{{ $count }}">
+                                    Clear Response
+                                </label>
                             </div>
                             <input type="hidden" name="ques{{ $count }}" value="{{ $q->id }}">
                             <div class="m-3">
@@ -71,11 +77,11 @@
                                         id="option{{ $label++ }}" value="d">
                                 </div>
                                 <input class="form-check-input me-2" type="radio" name="option{{ $count }}"
-                                    value="0" checked hidden>
+                                    id="optionclear{{ $count }}" value="0" checked hidden>
                             </div>
                         </div>
                     @endforeach
-                    <div class="w-md-25">
+                    <div class="w-50">
                         <div class="border-bottom rounded-1 px-2 w-100">
                             <div class="d-flex align-items-center">
                                 <div class="type m-2 px-3 py-2 bg-success text-white">
@@ -98,8 +104,9 @@
                         </div>
                         <div class="no-series d-flex">
                             @for ($i = 0; $i < $count; $i++)
-                                <a onclick="showQuestion({{ $i + 1 }})" class="type text-decoration-none m-2 px-3 py-2 text-black"
-                                    id="btn{{ $i+1 }}">
+                                <a onclick="showQuestion({{ $i + 1 }})"
+                                    class="type text-decoration-none m-2 px-3 py-2" style="color:{{$i?'black':'white'}};background:{{$i?'':'#e04943'}}"
+                                    id="btn{{ $i + 1 }}">
                                     {{ $i + 1 }}
                                 </a>
                             @endfor
@@ -111,6 +118,7 @@
                 <button class="btn btn-primary" onclick="confirm('You want to SUBMIT your TEST')"><b>SUBMIT
                         TEST</b></button>
                 <input type="hidden" name="count" value="{{ $count }}">
+                <input type="hidden" name="test_id" value="{{ $test->test_id }}">
                 <button id="submit" hidden><b>SUBMIT</b></button>
             </div>
         </div>
@@ -124,7 +132,7 @@
 
             // Get today's date and time
             var now = new Date().getTime();
-            var distance = {{$a}} - now;
+            var distance = {{ $a }} - now;
 
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -159,9 +167,11 @@
             var btn = document.getElementById('btn' + questionNumber);
             if (answeredQuestions.includes(questionNumber)) {
                 btn.style.backgroundColor = 'green';
-                btn.style.Color = 'white';
+                btn.style.color = 'white';
             } else {
-                btn.style.backgroundColor = 'red'; // Set to default color when showing the question
+                btn.style.backgroundColor = '#e04943'; // Set to default color when showing the question
+                btn.style.color = 'white';
+
             }
         }
 
@@ -186,17 +196,17 @@
 
             // Update the button color based on whether an option is selected or not
             var btn = document.getElementById('btn' + questionNumber);
-            btn.style.backgroundColor = optionSelected ? 'green' : 'red';
+            btn.style.backgroundColor = optionSelected ? 'green' : '#e04943';
             btn.style.color = 'white';
-            ({{$count}}==questionNumber)?'':showQuestion(questionNumber+1);
+            ({{ $count }} == questionNumber) ? '' : showQuestion(questionNumber + 1);
             if (optionSelected) {
-            answeredQuestions.push(questionNumber);
-        } 
+                answeredQuestions.push(questionNumber);
+            }
         }
 
         // Rest of the countdown timer code remains unchanged
 
         // Set the total number of questions
-        var totalQuestions = {{$count}}; // Change this to the total number of questions
+        var totalQuestions = {{ $count }}; // Change this to the total number of questions
     </script>
 @endsection

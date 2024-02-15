@@ -51,15 +51,54 @@ class StudentController extends Controller
         return view('student.profile', $user);
     }
 
+    //------------- Student instructions -------------//
+    public function select(Request $request)
+    {
+        $test = DB::table('tests')->where('test_id', $request->test_id)->first();
+        return view('student.select', ['test' => $test]);
+    }
+
+    //------------- Student feedback -------------//
+    public function feedback(Request $request)
+    {
+        return view('student.feedback', ['test_id' => $request->test_id]);
+    }
+
+    //------------- Student savefeedback -------------//
+    public function savefeedback(Request $request)
+    {
+        DB::table('feedbacks')->insert([
+            'student_id' => Auth::user()->roll_no,
+            'test_id' => $request->test_id,
+            'rating' => $request->rating,
+            'satisfy' => $request->satisfy,
+            'level' => $request->level,
+            'suggestions' => $request->suggestions
+        ]);
+        return redirect()->route('student.dashboard')
+            ->withSuccess('Feedback Submitted successfully!');
+    }
+
+    //------------- Student view all tests -------------//
+    public function viewtests(Request $request)
+    {
+        $currentTime = now();
+        $currentDate = date(now()); // Get the current date
+
+        $activeTests = DB::table('tests')
+            ->orderByDesc('date')
+            ->get();
+        return view('student.viewtests', compact('activeTests'));
+    }
+
     //------------- Student Result -------------//
     public function result(Request $request)
     {
-        // dd($request);
         $user = Auth::getUser();
-        $test = DB::table('tests')->first();
+        $test = DB::table('tests')->where('test_id', '=', $request->test_id)->get();
         $result = DB::table('results')
             ->where('student_roll_no', '=', $user->roll_no)
-            ->where('test_id', '=', $test->test_id)
+            ->where('test_id', '=', $request->test_id)
             ->first();
         if (!$result) {
             $atemted = 0;
@@ -85,7 +124,7 @@ class StudentController extends Controller
             $score = $correct * 1 - $wrong * 0.25;
             DB::table('results')->insert([
                 "student_roll_no" => $user->roll_no,
-                'test_id' => $test->test_id,
+                'test_id' => $request->test_id,
                 'total_questions' => $total,
                 'attemted' =>  $atemted,
                 'correct' => $correct,
@@ -96,35 +135,47 @@ class StudentController extends Controller
             ]);
             $result = DB::table('results')
                 ->where('student_roll_no', '=', $user->roll_no)
-                ->where('test_id', '=', $test->test_id)
+                ->where('test_id', '=', $request->test_id)
                 ->first();
             $rank = DB::table('results')
-                ->where('test_id', '=', $test->test_id)
+                ->where('test_id', '=', $request->test_id)
                 ->where('total_score', '>', $score)->count();
-                $total = DB::table('results')
-            ->where('test_id', '=', $test->test_id)->count();
-            return view('student.result', ['r' => $result, 's' => 1, 'rank' => $rank+1, 'total' =>$total]);
+            $total = DB::table('results')
+                ->where('test_id', '=', $request->test_id)->count();
+            return view('student.result', [
+                'r' => $result,
+                's' => 1,
+                'rank' => $rank + 1,
+                'total' => $total,
+                'test_id' => $request->test_id
+            ]);
         }
         $rank = DB::table('results')
-            ->where('test_id', '=', $test->test_id)
+            ->where('test_id', '=', $request->test_id)
             ->where('total_score', '>', $result->total_score)->count();
         $total = DB::table('results')
-            ->where('test_id', '=', $test->test_id)->count();
-        return view('student.result', ['r' => $result, 's' => 0, 'rank' => $rank+1, 'total' =>$total]);
+            ->where('test_id', '=', $request->test_id)->count();
+        return view('student.result', [
+            'r' => $result,
+            's' => 0,
+            'rank' => $rank + 1,
+            'total' => $total,
+            'test_id' => $request->test_id
+        ]);
     }
 
     //------------- Quiz -------------//
-    public function quiz()
+    public function quiz(Request $request)
     {
-        $test = DB::table('tests')->where('test_id', 2)->first();
-        if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))){
+        $test = DB::table('tests')->where('test_id', $request->test_id)->first();
+        if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))) {
             $questions = DB::table('questions')
                 ->inRandomOrder()
-                ->limit(10)->get();
+                ->limit($test->no_of_questions)->get();
             $a = Carbon::parse($test->end_time)->getTimestampMs();
             return view('student.Quiz', ['questions' => $questions,  'test' => $test, 'a' => $a]);
         }
-        return  redirect(route('student.select'));
+        return  redirect(route('student.select', ['test_id' => $request->test_id]));
     }
 
     //------------- student Signup -------------//
