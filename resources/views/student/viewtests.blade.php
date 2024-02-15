@@ -30,7 +30,15 @@
                                 id="testEndTime{{ $activeTest->test_id }}">{{ $activeTest->end_time }}</span></p>
                     </div>
                     <div class="time">
-                        <h3 id="timer{{ $activeTest->test_id }}"></h3>
+                        @if ($activeTest->date == now()->toDateString())
+                        <span>Test starts after</span>
+                    <span id="timer{{ $activeTest->test_id }}"></span>
+                    @elseif ($activeTest->date >= now()->toDateString())
+                        <p data-test-id="{{ $activeTest->test_id }}">Upcomming</p>
+                    @elseif ($activeTest->date <= now()->toDateString())
+                        <p data-test-id="{{ $activeTest->test_id }}">Expired</p>
+                    @endif
+                        
                     </div>
                 </div>
             </div>
@@ -38,58 +46,47 @@
     @else
         <p>No active tests found.</p>
     @endif
-
-    <script>
-        // Function to update timer for a specific test
-        function updateTimer(testId) {
-            var startTime = document.getElementById("testStartTime" + testId).textContent;
-            var endTime = document.getElementById("testEndTime" + testId).textContent;
-
-            // Calculate remaining time
-            var timer = calculateTimer(startTime, endTime);
-
-            // Update timer display
-            document.getElementById("timer" + testId).textContent = timer;
-
-            // If the test has ended, disable the start quiz button
-            if (timer === "Test has ended") {
-                document.getElementById("startQuizBtn" + testId).disabled = true;
-            }
-        }
-
-        // Call updateTimer function for each test on page load and every second
-        window.onload = function() {
-            @foreach ($activeTests as $activeTest)
-                updateTimer({{ $activeTest->test_id }});
-                setInterval(function() {
-                    updateTimer({{ $activeTest->test_id }});
-                }, 1000);
-            @endforeach
-        };
-
-        // Function to calculate remaining time
-        function calculateTimer(start_time, end_time) {
-            var now = new Date();
-            var testStart = new Date();
-            var testEnd = new Date();
-
-            testStart.setHours(parseInt(start_time.split(":")[0]), parseInt(start_time.split(":")[1]), 0);
-            testEnd.setHours(parseInt(end_time.split(":")[0]), parseInt(end_time.split(":")[1]), 0);
-
-            if (now < testStart) {
-                // Test has not started yet
-                return "Test starts at " + start_time;
-            } else if (now >= testEnd) {
-                // Test has already ended
-                return "Test has ended";
-            } else {
-                // Test is ongoing
-                var remainingTime = testEnd - now;
-                var hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-                return hours + ":" + minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
-            }
-        }
-    </script>
 @endsection
+
+<script>
+    // Function to update timer for a specific test
+function updateTimer(testId, startTime) {
+    // Calculate remaining time until the test starts
+    var timer = calculateTimer(startTime);
+
+    // Update timer display
+    document.getElementById("timer" + testId).textContent = timer;
+}
+
+// Call updateTimer function for each test on page load and every second
+window.onload = function() {
+    @foreach ($activeTests as $activeTest)
+        @if ($activeTest->date == now()->toDateString())
+            var startTime{{ $activeTest->test_id }} = "{{ $activeTest->start_time }}";
+            updateTimer({{ $activeTest->test_id }}, startTime{{ $activeTest->test_id }});
+            setInterval(function() { updateTimer({{ $activeTest->test_id }}, startTime{{ $activeTest->test_id }}); }, 1000);
+        @endif
+    @endforeach
+};
+
+// Function to calculate remaining time until the test starts
+function calculateTimer(startTime) {
+    var now = new Date();
+    var testStart = new Date();
+
+    testStart.setHours(parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1]), 0);
+
+    var remainingTime = testStart - now;
+
+    // If remaining time is negative, it means the test has already started or it's in progress
+    if (remainingTime <= 0) {
+        return "Test in progress";
+    }
+
+    var hours = Math.floor(remainingTime / (1000 * 60 * 60));
+    var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+    return hours + ":" + minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+}
+
+</script>
