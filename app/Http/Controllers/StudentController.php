@@ -133,13 +133,13 @@ class StudentController extends Controller
         $currentTime = now();
         $currentDate = $currentTime->toDateString(); // Get the current date
 
-        $activeTest = DB::table('tests')
+        $activeTests = DB::table('tests')
             ->whereDate('date', '=', $currentDate) // Check if current date matches
             ->where('start_time', '<=', $currentTime)
             ->where('end_time', '>=', $currentTime)
-            ->first();
+            ->get();
 
-        return view('student.404', compact('activeTest'));
+        return view('student.404', compact('activeTests'));
     }
 
 
