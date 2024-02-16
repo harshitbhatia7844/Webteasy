@@ -65,8 +65,14 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.viewresults') }}">
-                    <i class="fas fa-book-open    "></i>
+                    <i class="fas fa-book-open"></i>
                     <span>View Results</span></a>
+            </li>   
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.viewfeedbacks') }}">
+                    <i class="fas fa-book-open"></i>
+                    <span>View Feedbacks</span></a>
             </li>
 
             <li class="nav-item">

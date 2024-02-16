@@ -75,7 +75,11 @@ class AdminController extends Controller
     //--------------Admin Dashboard ---------------//
     public function dashboard()
     {
-        return view('admin.index');
+        $students = DB::table('students')->count();
+        $tests = DB::table('tests')->count();
+        $feedbacks = DB::table('feedbacks')->count();
+        $results = DB::table('results')->count();
+        return view('admin.index', ['students' => $students, 'tests' => $tests, 'feedbacks' => $feedbacks, 'results' => $results]);
     }
 
     //--------------Admin Profile ---------------//
@@ -83,6 +87,23 @@ class AdminController extends Controller
     {
         $user = Auth::getUser();
         return view('admin.profile', $user);
+    }
+
+    //--------------Admin feedback ---------------//
+    public function viewfeedbacks(Request $request)
+    {
+        if ($request->test_id) {
+            $items = DB::table('feedbacks as f')->where('test_id', $request->test_id)
+                ->join('students as s', 'f.student_id', 's.roll_no')
+                ->orderBy('rating')
+                ->paginate(25);
+            return view('admin.viewfeedback', ['items' => $items]);
+        }
+        $items = DB::table('feedbacks as f')
+            ->join('students as s', 'f.student_id', 's.roll_no')
+            ->orderBy('rating')
+            ->paginate(25);
+        return view('admin.viewfeedback', ['items' => $items]);
     }
 
     //------------- Admin View All Students -------------//
@@ -93,10 +114,10 @@ class AdminController extends Controller
                 ->where('course', $request->course)
                 ->where('branch', $request->branch)
                 ->where('semester', $request->semester)
-                ->paginate(10);
+                ->paginate(25);
             return view('admin.viewstudents', ['items' => $students]);
         }
-        $students = DB::table('students')->paginate(10);
+        $students = DB::table('students')->paginate(25);
         return view('admin.viewstudents', ['items' => $students]);
     }
 
@@ -107,13 +128,13 @@ class AdminController extends Controller
             $students = DB::table('results as r')->where('test_id', $request->test_id)
                 ->join('students as s', 'r.student_roll_no', 's.roll_no')
                 ->orderByDesc('total_score')
-                ->paginate(10);
+                ->paginate(25);
             return view('admin.viewresults', ['items' => $students, 'test_id' => $request->test_id]);
         }
         $students = DB::table('results as r')
             ->join('students as s', 'r.student_roll_no', 's.roll_no')
             ->orderByDesc('total_score')
-            ->paginate(10);
+            ->paginate(25);
         return view('admin.viewresults', ['items' => $students, 'test_id' => '']);
     }
 

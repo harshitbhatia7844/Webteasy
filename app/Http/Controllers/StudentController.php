@@ -54,7 +54,7 @@ class StudentController extends Controller
     //------------- Student instructions -------------//
     public function select(Request $request)
     {
-        if (DB::table('results')->where('test_id', $request->test_id)->exists()) {
+        if (DB::table('results')->where('test_id', $request->test_id)->where('student_roll_no', Auth::getUser()->roll_no)->exists()) {
             return back()->withErrors(["Test Already Submited"]);
         }
         $test = DB::table('tests')->where('test_id', $request->test_id)->first();
@@ -173,8 +173,8 @@ class StudentController extends Controller
     //------------- Quiz -------------//
     public function quiz(Request $request)
     {
-        if (DB::table('results')->where('test_id', $request->test_id)->exists()) {
-            return redirect()->route('student.viewtests')->withErrors(["Test Already Submited"]);
+        if (DB::table('results')->where('test_id', $request->test_id)->where('student_roll_no', Auth::getUser()->roll_no)->exists()) {
+            return back()->withErrors(["Test Already Submited"]);
         }
         $test = DB::table('tests')->where('test_id', $request->test_id)->first();
         if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))) {

@@ -55,6 +55,7 @@ Route::prefix('/admin')->name('admin.')
             Route::get('/viewstudent', 'viewstudent')->name('viewstudents');
             Route::get('/viewtest', 'viewtest')->name('viewtest');
             Route::get('/viewresults', 'viewresults')->name('viewresults');
+            Route::get('/viewfeedbacks', 'viewfeedbacks')->name('viewfeedbacks');
             Route::get('/viewquestions', 'viewquestions')->name('viewquestions');
             Route::get('download-pdf', 'downloadPDF')->name('download-pdf');
             Route::post('/savequestions', 'savequestions')->name('savequestions');
