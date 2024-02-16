@@ -64,6 +64,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('student.viewresult') }}">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <span>View Results</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -159,7 +165,7 @@
             <footer class="sticky-footer bg-white mt-5">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Website 2024</span>
+                        <span>Copyright &copy; Website 2024 by HPS</span>
                     </div>
                 </div>
             </footer>

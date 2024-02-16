@@ -38,7 +38,7 @@
 
             <div class="form-outline form-white mb-4">
                 <input type="text" id="typeMobileX" placeholder="Mobile No." class="form-control form-control-lg"
-                    name="mobile_no" />
+                    name="mobile_no" minlength="10" maxlength="10"/>
                 <!-- <label class="form-label" for="typeMobileX">Mobile NO.</label> -->
             </div>
 
@@ -81,8 +81,8 @@
             <div class="form-outline form-white mb-4">
                 <select name="gender" id="" class="form-control form-control-lg">
                     <option default hidden>Select</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
             </div>
 

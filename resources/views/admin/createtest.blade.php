@@ -99,6 +99,21 @@
                                 </div>
 
                                 <hr class="mx-n3">
+                                
+                                <div class="row align-items-center pt-4 pb-3">
+                                    <div class="col-md-3 ps-5">
+
+                                        <h6 class="mb-0">NO of Questions</h6>
+
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+
+                                        <input class="form-control form-control-lg" type="text" name="no_of_questions" />
+
+                                    </div>
+                                </div>
+
+                                <hr class="mx-n3">
 
                                 <div class="px-5 py-4">
                                     <button type="submit" class="btn btn-primary btn-lg">Add Test</button>

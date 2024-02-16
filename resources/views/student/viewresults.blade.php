@@ -1,11 +1,13 @@
-@extends('layout.adminlayout')
+@extends('layout.studentlayout')
 @section('content')
-    <h1 class="text-primary">View Tests</h1>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="text-primary">View Results</h1>
+    </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Test</h6>
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Results</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -14,29 +16,28 @@
                         <tr>
                             <th>S.No</th>
                             <th>Test Name</th>
-                            <th>Date</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
-                            <th>Duration</th>
-                            <th>Questions</th>
-                            <th>View  Results</th>
+                            <th>Date </th>
+                            <th>Total Questions</th>
+                            <th>Attempted</th>
+                            <th>Right Answers</th>
+                            <th>Total Score</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($tests as $item)
+                        @foreach ($items as $item)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->date }}</td>
-                                <td>{{ $item->start_time }}</td>
-                                <td>{{ $item->end_time }}</td>
-                                <td>{{ $item->duration }}</td>
                                 <td>{{ $item->no_of_questions }}</td>
-                                <td><a href="{{route('admin.viewresults')}}?test_id={{$item->test_id}}">View Result</a></td>
+                                <td>{{ $item->attemted }}</td>
+                                <td>{{ $item->correct }}</td>
+                                <td>{{ $item->total_score }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {{ $items->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>

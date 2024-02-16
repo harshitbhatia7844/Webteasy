@@ -108,7 +108,7 @@ class AdminController extends Controller
                 ->join('students as s', 'r.student_roll_no', 's.roll_no')
                 ->orderByDesc('total_score')
                 ->paginate(10);
-            return view('admin.viewresults', ['items' => $students, 'test_id'=>$request->test_id]);
+            return view('admin.viewresults', ['items' => $students, 'test_id' => $request->test_id]);
         }
         $students = DB::table('results as r')
             ->join('students as s', 'r.student_roll_no', 's.roll_no')
@@ -144,25 +144,67 @@ class AdminController extends Controller
             'date' => $request->date,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
+            'no_of_questions' => $request->no_of_questions,
         ]);
         return redirect(route('admin.createtest'))
             ->withSuccess('Test has been created successfully!');
     }
 
+    //--------------Admin Profile ---------------//
+    public function addtq(Request $request)
+    {
+        $items = DB::table('questions')->paginate();
+        return view('admin.addtq', ['items' => $items]);
+    }
+
+    //--------------Admin Profile ---------------//
+    public function savetq(Request $request)
+    {
+        DB::table('tqs')->insert([
+            'tqs_test_id' => $request->tid,
+            'tqs_question_id' => $request->qid,
+        ]);
+        return redirect(route('admin.addtq'))
+            ->withSuccess('Questions uploaded successfully!');
+    }
+
+    //--------------Admin Profile ---------------//
+    public function savequestions(Request $request)
+    {
+
+        $file = $request->file('file');
+        $fileContents = file($file->getPathname());
+
+        foreach ($fileContents as $line) {
+            $data = str_getcsv($line);
+
+            DB::table('questions')->insert([
+                'question' => $data[0],
+                'a' => $data[1],
+                'b' => $data[2],
+                'c' => $data[3],
+                'd' => $data[4],
+                'answer' => $data[5],
+            ]);
+        }
+        return redirect(route('admin.addquestions'))
+            ->withSuccess('Questions uploaded successfully!');
+    }
+
     public function downloadPDF(Request $request)
     {
         ($request->test_id)
-        ?$users = DB::table('results as r')->where('test_id', $request->test_id)
+            ? $users = DB::table('results as r')->where('test_id', $request->test_id)
             ->join('students as s', 'r.student_roll_no', 's.roll_no')
             ->orderByDesc('total_score')
             ->get()
-        :$users = DB::table('results as r')
+            : $users = DB::table('results as r')
             ->join('students as s', 'r.student_roll_no', 's.roll_no')
             ->orderByDesc('total_score')
             ->get();
         $pdf = FacadePDF::loadView('admin.usersdetails', array('items' =>  $users))
             ->setPaper('a4', 'portrait');
 
-        return $pdf->download('students-result'.now().'.pdf');
+        return $pdf->download('students-result' . now() . '.pdf');
     }
 };

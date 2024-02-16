@@ -10,7 +10,8 @@
                     <div class="panel-body" style="">
                         <ul class="list-group mb-5">
                             <li class="list-group-item">
-                                <h4 style="text-align: center;color:#069;">Course : <span style="color:#000;">BTECH/Diploma/BCA
+                                <h4 style="text-align: center;color:#069;">Course : <span
+                                        style="color:#000;">BTECH/Diploma/BCA
                                     </span></h4>
                                 <h4 style="text-align: center;color:#069;">Paper : <span style="color:#000;">Test1-Mix Test
                                     </span></h4>
@@ -36,13 +37,19 @@
                                     {{ $r->total_score }}/{{ $r->total_questions }}</h4>
                             </li>
                             <li class="list-group-item">
-                                <h4 style="text-align:center;"><span style="color:#069;">Your Score %age</span> :
-                                    {{ round(($r->total_score * 100) / $r->total_questions ?: 1,2) }}% <span style="color:#069;">out
-                                        of</span> 100% </h4>
+                                <h4 style="text-align:center;"><span style="color:#069;">Result</span> :
+                                    @if ($r->total_score >= 12)
+                                        <span class="text-success">You Passed</span>
+                                    @else
+                                        <span class="text-danger">You Failed</span>
+                                    @endif
+                                </h4>
                             </li>
                             <li class="list-group-item">
-                                <h4 style="text-align:center;"><span class="text-success">Your Rank : {{ $rank }}
-                                        out of {{ $total }} students</span></h4>
+                                <h4 style="text-align:center;"><span style="color:#069;">Your Score %</span> :
+                                    {{ round(($r->total_score * 100) / $r->total_questions ?: 1, 2) }}% <span
+                                        style="color:#069;">out
+                                        of</span> 100% </h4>
                             </li>
                             @if ($s)
                                 <li class="list-group-item">
@@ -55,10 +62,11 @@
                                             Submited</span></h4>
                                 </li>
                             @endif
-                            <li class="list-group-item">
-                                <a href="{{ route('student.feedback') }}?test_id={{$test_id}}"><button class="btn btn-primary"> Next -> </button></a>
-                            </li>
                         </ul>
+                        <div class="mt-4">
+                            <a href="{{ route('student.feedback') }}?test_id={{ $test_id }}"><button
+                                    class="btn btn-primary"> Next -> </button></a>
+                        </div>
                     </div>
                 </div>
             </div>

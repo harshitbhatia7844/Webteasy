@@ -74,6 +74,12 @@
                     <i class="fa fa-question" aria-hidden="true"></i>
                     <span>View Questions</span></a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.addquestions') }}">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <span>Upload Questions</span></a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"

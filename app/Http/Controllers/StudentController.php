@@ -54,6 +54,9 @@ class StudentController extends Controller
     //------------- Student instructions -------------//
     public function select(Request $request)
     {
+        if (DB::table('results')->where('test_id', $request->test_id)->exists()) {
+            return back()->withErrors(["Test Already Submited"]);
+        }
         $test = DB::table('tests')->where('test_id', $request->test_id)->first();
         return view('student.select', ['test' => $test]);
     }
@@ -62,6 +65,17 @@ class StudentController extends Controller
     public function feedback(Request $request)
     {
         return view('student.feedback', ['test_id' => $request->test_id]);
+    }
+
+    //------------- Student feedback -------------//
+    public function viewresult()
+    {
+        $user = Auth::getUser();
+        $data = DB::table('results')
+            ->join('tests', 'results.test_id', '=', 'tests.test_id')
+            ->where('student_roll_no', $user->roll_no)
+            ->paginate(10);
+        return view('student.viewresults', ['items' => $data]);
     }
 
     //------------- Student savefeedback -------------//
@@ -86,8 +100,9 @@ class StudentController extends Controller
         $currentDate = date(now()); // Get the current date
 
         $activeTests = DB::table('tests')
+            ->where('date', '<=', $currentDate)
             ->orderByDesc('date')
-            ->get();
+            ->limit(5)->get();
         return view('student.viewtests', compact('activeTests'));
     }
 
@@ -95,7 +110,6 @@ class StudentController extends Controller
     public function result(Request $request)
     {
         $user = Auth::getUser();
-        $test = DB::table('tests')->where('test_id', '=', $request->test_id)->get();
         $result = DB::table('results')
             ->where('student_roll_no', '=', $user->roll_no)
             ->where('test_id', '=', $request->test_id)
@@ -137,28 +151,20 @@ class StudentController extends Controller
                 ->where('student_roll_no', '=', $user->roll_no)
                 ->where('test_id', '=', $request->test_id)
                 ->first();
-            $rank = DB::table('results')
-                ->where('test_id', '=', $request->test_id)
-                ->where('total_score', '>', $score)->count();
             $total = DB::table('results')
                 ->where('test_id', '=', $request->test_id)->count();
             return view('student.result', [
                 'r' => $result,
                 's' => 1,
-                'rank' => $rank + 1,
                 'total' => $total,
                 'test_id' => $request->test_id
             ]);
         }
-        $rank = DB::table('results')
-            ->where('test_id', '=', $request->test_id)
-            ->where('total_score', '>', $result->total_score)->count();
         $total = DB::table('results')
             ->where('test_id', '=', $request->test_id)->count();
         return view('student.result', [
             'r' => $result,
             's' => 0,
-            'rank' => $rank + 1,
             'total' => $total,
             'test_id' => $request->test_id
         ]);
@@ -167,6 +173,9 @@ class StudentController extends Controller
     //------------- Quiz -------------//
     public function quiz(Request $request)
     {
+        if (DB::table('results')->where('test_id', $request->test_id)->exists()) {
+            return redirect()->route('student.viewtests')->withErrors(["Test Already Submited"]);
+        }
         $test = DB::table('tests')->where('test_id', $request->test_id)->first();
         if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))) {
             $questions = DB::table('questions')

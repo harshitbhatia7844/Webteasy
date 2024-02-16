@@ -8,20 +8,20 @@
                     <h2>Course : BTECH/Diploma/BCA</h2>
                     {{-- <button class="btn btn-primary">Submit Test</button> --}}
                 </div>
-                <div class="navbar px-3 m-4">
-                    <h3>Paper : Test1-{{ $test->name }}</h3>
+                <div class="navbar px-3 m-2">
+                    <h3>Paper : {{ $test->name }}</h3>
                     <h6 id="timer"></h6>
                 </div>
             </div>
             <div class="content d-flex justify-content-center">
-                <div class="d-md-flex border rounded-2 m-5 w-100">
+                <div class="border rounded-2 m-4 w-100">
                     @php
                         $count = 0;
                         $label = 1;
                     @endphp
                     @foreach ($questions as $q)
                         <div class="border rounded-2 w-100" id="question{{ $count + 1 }}"
-                            style="display:@if ($count + 1 == 1) block @else none @endif; max-height: 60vh;">
+                            style="display:@if ($count + 1 == 1) block @else none @endif; max-height: 80vh; overflow:scroll;">
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex" id="{{ ++$count }}">
                                     <div class="type m-2 px-3 py-2">
@@ -35,7 +35,7 @@
                                         Type: MCQ
                                     </div>
                                 </div>
-                                <label class="btn btn-outline-secondary m-2 px-3 py-2" for="optionclear{{ $count }}">
+                                <label class="type m-2 px-3 py-2 btn btn-outline-secondary" for="optionclear{{ $count }}">
                                     Clear Response
                                 </label>
                             </div>
@@ -81,8 +81,8 @@
                             </div>
                         </div>
                     @endforeach
-                    <div class="w-50">
-                        <div class="border-bottom rounded-1 px-2 w-100">
+                    <div class="w-100">
+                        <div class="d-md-flex justify-content-evenly border-bottom rounded-1 p-2 w-100">
                             <div class="d-flex align-items-center">
                                 <div class="type m-2 px-3 py-2 bg-success text-white">
                                     0
@@ -102,7 +102,7 @@
                                 Visited Not Answered
                             </div>
                         </div>
-                        <div class="no-series d-flex">
+                        <div class="no-series d-flex justify-content-evenly align-items-center">
                             @for ($i = 0; $i < $count; $i++)
                                 <a onclick="showQuestion({{ $i + 1 }})"
                                     class="type text-decoration-none m-2 px-3 py-2" style="color:{{$i?'black':'white'}};background:{{$i?'':'#e04943'}}"
@@ -115,7 +115,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-2">
-                <button class="btn btn-primary" onclick="confirm('You want to SUBMIT your TEST')"><b>SUBMIT
+                <button class="btn btn-primary mb-5" onclick="confirm('You want to SUBMIT your TEST')"><b>SUBMIT
                         TEST</b></button>
                 <input type="hidden" name="count" value="{{ $count }}">
                 <input type="hidden" name="test_id" value="{{ $test->test_id }}">
@@ -139,7 +139,7 @@
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the result in the element with id="timer"
-            document.getElementById("timer").innerHTML = hours + "h " +
+            document.getElementById("timer").innerHTML = "Time left : " + hours + "h " +
                 minutes + "m " + seconds + "s ";
 
             // If the count down is finished, write some text
@@ -149,7 +149,6 @@
                 document.getElementById("submit").click();
             }
         }, 1000);
-
 
         // Add a variable to keep track of answered questions
         var answeredQuestions = [];
