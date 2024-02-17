@@ -41,13 +41,35 @@ class StudentController extends Controller
     //------------- Student Dashboard -------------//
     public function dashboard()
     {
-        return view('student.index');
+        $tests = DB::table('results')
+        ->where('student_roll_no', Auth::getUser()->roll_no)->count();
+        return view('student.index', compact('tests'));
     }
 
     //------------- Student Profile -------------//
     public function profile()
     {
         $user = Auth::getUser();
+        return view('student.profile', $user);
+    }
+
+    //------------- Student Profile -------------//
+    public function updateprofile(Request $request)
+    {
+        $user = Auth::getUser();
+        DB::table('students')->where('roll_no', Auth::getUser()->roll_no)->update
+        ([
+            'roll_no' => $request->roll_no,
+            'name' => $request->name,
+            'email' => $request->email,
+            'mobile_no' => $request->mobile_no,
+            'gender' => $request->gender,
+            'course' => $request->course,
+            'branch' => $request->branch,
+            'semester' => $request->semester,
+            'updated_at' => now()
+        ]);
+        return back()->withSuccess("Profile has been updated Successfully!");
         return view('student.profile', $user);
     }
 

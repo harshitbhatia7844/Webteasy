@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-body d-flex justify-content-between" id="testBody{{ $activeTest->test_id }}"
                     style="display: none;">
-                    <div class="d-flex">
+                    <div class="d-md-flex">
                         <div class="info mr-5">
                             <p><strong>Date:</strong> <span
                                     id="testDate{{ $activeTest->test_id }}">{{ $activeTest->date }}</span></p>

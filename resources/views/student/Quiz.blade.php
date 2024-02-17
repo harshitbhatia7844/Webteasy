@@ -2,7 +2,7 @@
 @section('content')
     <form action="{{ route('student.result') }}" method="post">
         @csrf
-        <div class="container mt-3">
+        <div class="container mt-3" style="user-select: none">
             <div class="header">
                 <div class="navbar">
                     <h2>Course : BTECH/Diploma/BCA</h2>
@@ -40,12 +40,12 @@
                                 </label>
                             </div>
                             <input type="hidden" name="ques{{ $count }}" value="{{ $q->id }}">
-                            <div class="m-3">
+                            <div class="m-3" inert>
                                 <h4>Q {{ $count }}: {{ $q->question }}</h4>
                             </div>
                             <div class="options">
                                 <div class="optn my-3" onclick="selectOption({{ $count }})">
-                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}">
+                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}" >
                                         <div class="op">1</div>
                                         {{ $q->a }}
                                     </label>
@@ -53,7 +53,7 @@
                                         id="option{{ $label++ }}" value="a">
                                 </div>
                                 <div class="optn my-3" onclick="selectOption({{ $count }})">
-                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}">
+                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}" >
                                         <div class="op">2</div>
                                         {{ $q->b }}
                                     </label>
@@ -61,7 +61,7 @@
                                         id="option{{ $label++ }}" value="b">
                                 </div>
                                 <div class="optn my-3" onclick="selectOption({{ $count }})">
-                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}">
+                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}" >
                                         <div class="op">3</div>
                                         {{ $q->c }}
                                     </label>
@@ -69,7 +69,7 @@
                                         id="option{{ $label++ }}" value="c">
                                 </div>
                                 <div class="optn my-3" onclick="selectOption({{ $count }})">
-                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}">
+                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}" >
                                         <div class="op">4</div>
                                         {{ $q->d }}
                                     </label>
@@ -85,19 +85,19 @@
                         <div class="d-md-flex justify-content-evenly border-bottom rounded-1 p-2 w-100">
                             <div class="d-flex align-items-center">
                                 <div class="type m-2 px-3 py-2 bg-success text-white">
-                                    0
+                                    <span id="answered">0</span>
                                 </div>
                                 Answered
                             </div>
                             <div class="d-flex align-items-center">
                                 <div class="type m-2 px-3 py-2">
-                                    0
+                                    <span id="notvisided">0</span>
                                 </div>
                                 Not Visited
                             </div>
                             <div class="d-flex align-items-center">
                                 <div class="type m-2 px-3 py-2 bg-danger text-white">
-                                    0
+                                    <span id="visited">0</span>
                                 </div>
                                 Visited Not Answered
                             </div>
