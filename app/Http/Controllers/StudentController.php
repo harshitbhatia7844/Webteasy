@@ -42,7 +42,7 @@ class StudentController extends Controller
     public function dashboard()
     {
         $tests = DB::table('results')
-        ->where('student_roll_no', Auth::getUser()->roll_no)->count();
+            ->where('student_roll_no', Auth::getUser()->roll_no)->count();
         return view('student.index', compact('tests'));
     }
 
@@ -57,8 +57,7 @@ class StudentController extends Controller
     public function updateprofile(Request $request)
     {
         $user = Auth::getUser();
-        DB::table('students')->where('roll_no', Auth::getUser()->roll_no)->update
-        ([
+        DB::table('students')->where('roll_no', Auth::getUser()->roll_no)->update([
             'roll_no' => $request->roll_no,
             'name' => $request->name,
             'email' => $request->email,
@@ -70,17 +69,20 @@ class StudentController extends Controller
             'updated_at' => now()
         ]);
         return back()->withSuccess("Profile has been updated Successfully!");
-        return view('student.profile', $user);
     }
 
     //------------- Student instructions -------------//
     public function select(Request $request)
     {
-        if (DB::table('results')->where('test_id', $request->test_id)->where('student_roll_no', Auth::getUser()->roll_no)->exists()) {
+        if (DB::table('results')
+            ->where('test_id', $request->test_id)
+            ->where('student_roll_no', Auth::getUser()->roll_no)->exists()
+        ) {
             return back()->withErrors(["Test Already Submited"]);
         }
         $test = DB::table('tests')->where('test_id', $request->test_id)->first();
-        return view('student.select', ['test' => $test]);
+        $a = Carbon::parse($test->start_time)->getTimestampMs();
+        return view('student.select', ['test' => $test, 'a' => $a]);
     }
 
     //------------- Student feedback -------------//
@@ -115,6 +117,18 @@ class StudentController extends Controller
             ->withSuccess('Feedback Submitted successfully!');
     }
 
+    //--------------student analytics ---------------//
+    public function analytics(Request $request)
+    {
+        $user = Auth::getUser();
+        $items = DB::table('results')
+            ->where('test_id', $request->test_id)
+            ->where('student_roll_no', $user->roll_no)->first();
+        $average = DB::table('results')
+        ->where('test_id', $request->test_id)->average('total_score');
+        return view('student.analytics', compact('items', 'average'));
+    }
+
     //------------- Student view all tests -------------//
     public function viewtests(Request $request)
     {
@@ -147,6 +161,12 @@ class StudentController extends Controller
                 $qid = $request->input('ques' . $i);
                 $ans = $request->input('option' . $i++);
                 $answer = DB::table('questions')->where('id', $qid)->value('answer');
+                DB::table('q_attempts')->insert([
+                    "student_id" => $user->roll_no,
+                    'test_id' => $request->test_id,
+                    "question_id" => $qid,
+                    's_answer' => $ans
+                ]);
                 if ($ans) {
                     $atemted++;
                     if ($ans == $answer) {
@@ -166,7 +186,7 @@ class StudentController extends Controller
                 'correct' => $correct,
                 'wrong' =>  $wrong,
                 'total_score' =>  $score,
-                'created_at' => now(),
+                'created_at' => $request->start_time,
                 'updated_at' => now(),
             ]);
             $result = DB::table('results')
@@ -204,7 +224,8 @@ class StudentController extends Controller
                 ->inRandomOrder()
                 ->limit($test->no_of_questions)->get();
             $a = Carbon::parse($test->end_time)->getTimestampMs();
-            return view('student.Quiz', ['questions' => $questions,  'test' => $test, 'a' => $a]);
+            $now = now();
+            return view('student.Quiz', ['questions' => $questions,  'test' => $test, 'a' => $a, 'now' => $now]);
         }
         return  redirect(route('student.select', ['test_id' => $request->test_id]));
     }

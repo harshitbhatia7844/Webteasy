@@ -81,6 +81,13 @@
                     <span>View Questions</span></a>
             </li>
             
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.addtq') }}">
+                    <i class="fa fa-question" aria-hidden="true"></i>
+                    <span>Tests wise Questions</span></a>
+            </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.addquestions') }}">
                     <i class="fa fa-book" aria-hidden="true"></i>

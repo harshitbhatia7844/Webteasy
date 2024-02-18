@@ -85,19 +85,19 @@
                         <div class="d-md-flex justify-content-evenly border-bottom rounded-1 p-2 w-100">
                             <div class="d-flex align-items-center">
                                 <div class="type m-2 px-3 py-2 bg-success text-white">
-                                    <span id="answered">0</span>
+                                    <span id="answered"></span>
                                 </div>
                                 Answered
                             </div>
                             <div class="d-flex align-items-center">
                                 <div class="type m-2 px-3 py-2">
-                                    <span id="notvisided">0</span>
+                                    <span id="notvisided"></span>
                                 </div>
                                 Not Visited
                             </div>
                             <div class="d-flex align-items-center">
                                 <div class="type m-2 px-3 py-2 bg-danger text-white">
-                                    <span id="visited">0</span>
+                                    <span id="visited"></span>
                                 </div>
                                 Visited Not Answered
                             </div>
@@ -117,6 +117,7 @@
             <div class="d-flex justify-content-center mt-2">
                 <button class="btn btn-primary mb-5" onclick="confirm('You want to SUBMIT your TEST')"><b>SUBMIT
                         TEST</b></button>
+                <input type="hidden" name="start_time" value="{{ $now }}">
                 <input type="hidden" name="count" value="{{ $count }}">
                 <input type="hidden" name="test_id" value="{{ $test->test_id }}">
                 <button id="submit" hidden><b>SUBMIT</b></button>

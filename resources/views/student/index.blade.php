@@ -111,24 +111,19 @@
     <div class="slideshow-container">
         <!-- Full-width images with number and caption text -->
         <div class="mySlides fade">
-            <div class="numbertext">1 / 5</div>
-            <a href="categories.php"><img src="{{ asset('images/banner-1.jpg') }}" style="width: 100%;"></a>
+            <a href=""><img src="{{ asset('images/banner1.jpg') }}" style="width: 100%;"></a>
         </div>
         <div class="mySlides fade">
-            <div class="numbertext">2 / 5</div>
-            <a href="categories.php"><img src="{{ asset('images/banner-1.jpg') }}" style="width:100%"></a>
+            <a href=""><img src="{{ asset('images/banner3.jpg') }}" style="width:100%"></a>
         </div>
         <div class="mySlides fade">
-            <div class="numbertext">3 / 5</div>
-            <a href="categories.php"><img src="{{ asset('images/banner-1.jpg') }}" style="width:100%"></a>
+            <a href=""><img src="{{ asset('images/banner2.jpg') }}" style="width:100%"></a>
         </div>
         <div class="mySlides fade">
-            <div class="numbertext">4 / 5</div>
-            <a href="categories.php"><img src="{{ asset('images/banner-1.jpg') }}" style="width:100%"></a>
+            <a href=""><img src="{{ asset('images/banner4.jpg') }}" style="width:100%"></a>
         </div>
         <div class="mySlides fade">
-            <div class="numbertext">5 / 5</div>
-            <a href="categories.php"><img src="{{ asset('images/banner-1.jpg') }}" style="width:100%"></a>
+            <a href=""><img src="{{ asset('images/banner5.jpg') }}" style="width:100%"></a>
         </div>
     </div>
 
@@ -143,7 +138,7 @@
     <script>
         let slideIndex = 1;
         showSlides(slideIndex);
-        const timer = setInterval(showSlides, 6000);
+        const timer = setInterval(showSlides, 3000);
 
         // Thumbnail image controls
         function currentSlide(n) {

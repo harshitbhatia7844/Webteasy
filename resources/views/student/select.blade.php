@@ -7,7 +7,7 @@
             <section id="instructions" class="mt-4">
                 <h2 class="mb-4">Instructions</h2>
                 <ul class="list-group">
-                    <li class="list-group-item">Test Starts at {{ $test->start_time }}</li>
+                    <li class="list-group-item"><h6 id="timer"></h6></li>
                     <li class="list-group-item">This test is only MCQ based.</li>
                     <li class="list-group-item">Only one correct answer for each question.</li>
                     <li class="list-group-item">The test shall consists of {{ $test->no_of_questions }} questions with time
@@ -29,4 +29,30 @@
             </section>
         </div>
     </div>
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date().getTime() + 1000 * 60 * {{ $test->duration }}; // timer in minutes
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+            var distance = {{ $a }} - now;
+
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="timer"
+            document.getElementById("timer").innerHTML = "Test starts in : " + hours + "h " +
+                minutes + "m " + seconds + "s ";
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "You can now Start Test";
+            }
+        }, 1000);
+    </script>
 @endsection

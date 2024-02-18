@@ -109,7 +109,7 @@ class AdminController extends Controller
     //------------- Admin View All Students -------------//
     public function viewstudent(Request $request)
     {
-        if ($request->course && $request->branch && $request->semester) {
+        if ($request->course || $request->branch || $request->semester) {
             $students = DB::table('students')
                 ->where('course', $request->course)
                 ->where('branch', $request->branch)
@@ -124,18 +124,19 @@ class AdminController extends Controller
     //------------- Admin View All Students -------------//
     public function viewresults(Request $request)
     {
+        $tests = DB::table('tests')->get();
         if ($request->test_id) {
             $students = DB::table('results as r')->where('test_id', $request->test_id)
                 ->join('students as s', 'r.student_roll_no', 's.roll_no')
                 ->orderByDesc('total_score')
                 ->paginate(25);
-            return view('admin.viewresults', ['items' => $students, 'test_id' => $request->test_id]);
+            return view('admin.viewresults', ['items' => $students, 'test_id' => $request->test_id, 'tests' => $tests]);
         }
         $students = DB::table('results as r')
             ->join('students as s', 'r.student_roll_no', 's.roll_no')
             ->orderByDesc('total_score')
             ->paginate(25);
-        return view('admin.viewresults', ['items' => $students, 'test_id' => '']);
+        return view('admin.viewresults', ['items' => $students, 'tests' => $tests]);
     }
 
     //--------------Admin Profile ---------------//
@@ -148,10 +149,17 @@ class AdminController extends Controller
     }
 
     //--------------Admin Profile ---------------//
-    public function viewquestions()
+    public function viewquestions(Request $request)
     {
-        $items = DB::table('questions')->paginate();
-        return view('admin.viewquestions', ['items' => $items]);
+        $tests = DB::table('tests')->get();
+        if ($request->test_id) {
+            $items = DB::table('questions as q')
+                ->join('tqs', 'q.id', 'tqs.tqs_question_id')
+                ->where('tqs_test_id', $request->test_id)->paginate(25);
+            return view('admin.viewquestions', ['items' => $items, 'tests' => $tests]);
+        }
+        $items = DB::table('questions')->paginate(25);
+        return view('admin.viewquestions', ['items' => $items, 'tests' => $tests]);
     }
 
     //--------------Admin Profile ---------------//
@@ -171,20 +179,34 @@ class AdminController extends Controller
             ->withSuccess('Test has been created successfully!');
     }
 
-    //--------------Admin Profile ---------------//
+    //--------------Admin addtq ---------------//
     public function addtq(Request $request)
     {
-        $items = DB::table('questions')->paginate();
-        return view('admin.addtq', ['items' => $items]);
+        $tests = DB::table('tests')->get();
+        $items = DB::table('questions')->paginate(25);
+        return view('admin.addtq', ['items' => $items, 'tests' => $tests]);
+    }
+
+    //--------------Admin analytics ---------------//
+    public function analytics(Request $request)
+    {
+        $items = DB::table('q_attempts as a')
+            ->join('questions as q', 'a.question_id', 'q.id')
+            ->where('test_id', $request->test_id)
+            ->where('student_id', $request->student_id)->get();
+        return view('admin.analytics', ['items' => $items]);
     }
 
     //--------------Admin Profile ---------------//
     public function savetq(Request $request)
     {
-        DB::table('tqs')->insert([
-            'tqs_test_id' => $request->tid,
-            'tqs_question_id' => $request->qid,
-        ]);
+        $qids = $request->qid;
+        foreach ($qids as $qid) {
+            DB::table('tqs')->insert([
+                'tqs_test_id' => $request->tid,
+                'tqs_question_id' => $qid,
+            ]);
+        }
         return redirect(route('admin.addtq'))
             ->withSuccess('Questions uploaded successfully!');
     }
@@ -192,7 +214,6 @@ class AdminController extends Controller
     //--------------Admin Profile ---------------//
     public function savequestions(Request $request)
     {
-
         $file = $request->file('file');
         $fileContents = file($file->getPathname());
 

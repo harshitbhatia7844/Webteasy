@@ -21,6 +21,7 @@
                             <th>Attempted</th>
                             <th>Right Answers</th>
                             <th>Total Score</th>
+                            <th>Analytics</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +34,7 @@
                                 <td>{{ $item->attemted }}</td>
                                 <td>{{ $item->correct }}</td>
                                 <td>{{ $item->total_score }}</td>
+                                <td><a href="{{route('student.analytics')}}?test_id={{ $item->test_id }}">Analytics</a></td>
                             </tr>
                         @endforeach
                     </tbody>

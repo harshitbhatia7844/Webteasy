@@ -22,6 +22,7 @@ Route::prefix('/student')->name('student.')
             Route::get('/', 'dashboard')->name('dashboard');
             Route::get('/profile', 'profile')->name('profile');
             Route::get('/quiz', 'quiz')->name('quiz');
+            Route::get('/analytics', 'analytics')->name('analytics');
             Route::post('/result', 'result')->name('result');
             Route::post('/updateprofile', 'updateprofile')->name('updateprofile');
             Route::get('/viewresult', 'viewresult')->name('viewresult');
@@ -55,6 +56,7 @@ Route::prefix('/admin')->name('admin.')
             Route::get('/viewstudent', 'viewstudent')->name('viewstudents');
             Route::get('/viewtest', 'viewtest')->name('viewtest');
             Route::get('/viewresults', 'viewresults')->name('viewresults');
+            Route::get('/analytics', 'analytics')->name('analytics');
             Route::get('/viewfeedbacks', 'viewfeedbacks')->name('viewfeedbacks');
             Route::get('/viewquestions', 'viewquestions')->name('viewquestions');
             Route::get('download-pdf', 'downloadPDF')->name('download-pdf');

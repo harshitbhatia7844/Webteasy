@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HPS - Online Quiz</title>
-    <link href={{ asset('css/sb-admin-2.min.css')}} rel="stylesheet">
+    <link href={{ asset('css/bootstrap.css')}} rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
 </head>
 <body>

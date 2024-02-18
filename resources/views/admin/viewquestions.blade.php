@@ -2,6 +2,15 @@
 @section('content')
     <h1 class="text-primary">View Questions</h1>
 
+    <form action="" class="d-md-flex" method="get">
+        <select name="test_id" class="form-control form-control-lg my-3 w-75">
+            <option value="">All Tests</option>
+            @foreach ($tests as $test)
+                <option value="{{$test->test_id}}">{{$test->name}} on {{$test->date}}</option>
+            @endforeach
+        </select>
+        <button class="btn btn-outline-primary m-3" type="submit">Filter by Test</button>
+    </form>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -18,28 +27,18 @@
                             <th>Option B</th>
                             <th>Option C</th>
                             <th>Option D</th>
-                            <th>Answer</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($items as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->question }}</td>
-                                <td>{{ $item->a }}</td>
-                                <td>{{ $item->b }}</td>
-                                <td>{{ $item->c }}</td>
-                                <td>{{ $item->d }}</td>
-                                @if ($item->answer == 'a')
-                                    <td>{{ $item->a }}</td>
-                                @elseif($item->answer == 'b')
-                                    <td>{{ $item->b }}</td>
-                                @elseif($item->answer == 'c')
-                                    <td>{{ $item->c }}</td>
-                                @else
-                                    <td>{{ $item->d }}</td>
-                                @endif
-                            </tr>
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->question }}</td>
+                            <td class="{{ $item->answer == 'a' ? 'text-success' : '' }}">{{ $item->a }}</td>
+                            <td class="{{ $item->answer == 'b' ? 'text-success' : '' }}">{{ $item->b }}</td>
+                            <td class="{{ $item->answer == 'c' ? 'text-success' : '' }}">{{ $item->c }}</td>
+                            <td class="{{ $item->answer == 'd' ? 'text-success' : '' }}">{{ $item->d }}</td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
