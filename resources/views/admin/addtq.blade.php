@@ -1,5 +1,6 @@
 @extends('layout.adminlayout')
 @section('content')
+    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <h2 class="text-primary">Assign Questions to Test</h2>
     <form action="{{ route('admin.savetq') }}" method="post">
         @csrf
@@ -16,12 +17,12 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">DataTables Questions</h6>
             </div>
-            <div class="card-body"> 
+            <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th><i class="fa fa-check-square" aria-hidden="true"></i></th>
+                                <th><input id="selectall" class="form-control m-1" type='checkbox' /></th>
                                 <th>S.No</th>
                                 <th>Question</th>
                                 <th>Option A</th>
@@ -62,4 +63,19 @@
             </div>
         </div>
     </form>
+    <script>
+        // Listen for click on toggle checkbox
+        $('#selectall').click(function(event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function() {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function() {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
 @endsection

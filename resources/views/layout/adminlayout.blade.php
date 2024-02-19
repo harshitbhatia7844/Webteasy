@@ -85,7 +85,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.addtq') }}">
                     <i class="fa fa-question" aria-hidden="true"></i>
-                    <span>Tests wise Questions</span></a>
+                    <span>Assign Questions</span></a>
             </li>
             
             <li class="nav-item">
@@ -104,7 +104,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Test</h6>
                         <a class="collapse-item" href="{{ route('admin.viewtest') }}">View All Tests</a>
-                        <a class="collapse-item" href="{{ route('admin.createtest') }}">Create Test</a>
+                        <a class="collapse-item" href="{{ route('admin.createtest') }}">Create New Test</a>
                     </div>
                 </div>
             </li>

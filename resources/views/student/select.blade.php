@@ -22,7 +22,7 @@
                     <li class="list-group-item">Test will automatically submit after the completion of time.</li>
                 </ul>
                 <div class="mt-4">
-                    <a href="{{ route('student.quiz') }}?test_id={{ $test->test_id }}"><button
+                    <a id="start" hidden href="{{ route('student.quiz') }}?test_id={{ $test->test_id }}"><button
                             class="btn btn-primary">Continue to Start
                             Test</button></a>
                 </div>
@@ -52,6 +52,7 @@
             if (distance < 0) {
                 clearInterval(x);
                 document.getElementById("timer").innerHTML = "You can now Start Test";
+                document.getElementById("start").removeAttribute("hidden");
             }
         }, 1000);
     </script>

@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -111,9 +109,9 @@ class AdminController extends Controller
     {
         if ($request->course || $request->branch || $request->semester) {
             $students = DB::table('students')
-                ->where('course', $request->course)
-                ->where('branch', $request->branch)
-                ->where('semester', $request->semester)
+                ->where('course', 'like', '%' . $request->course . '%')
+                ->where('branch', 'like', '%' . $request->branch . '%')
+                ->where('semester', 'like', '%' . $request->semester . '%')
                 ->paginate(25);
             return view('admin.viewstudents', ['items' => $students]);
         }
@@ -153,8 +151,8 @@ class AdminController extends Controller
     {
         $tests = DB::table('tests')->get();
         if ($request->test_id) {
-            $items = DB::table('questions as q')
-                ->join('tqs', 'q.id', 'tqs.tqs_question_id')
+            $items = DB::table('tqs')
+                ->join('questions as q', 'tqs.tqs_question_id', 'q.id')
                 ->where('tqs_test_id', $request->test_id)->paginate(25);
             return view('admin.viewquestions', ['items' => $items, 'tests' => $tests]);
         }
@@ -165,9 +163,34 @@ class AdminController extends Controller
     //--------------Admin Profile ---------------//
     public function addtest(Request $request)
     {
-        $total = DB::table('tests')->count();
+        $total = DB::table('tests')->orderByDesc('test_id')->first();
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $fileContents = file($file->getPathname());
+            $count = 0;
+            $q = DB::table('questions')->orderByDesc('id')->first();
+            foreach ($fileContents as $line) {
+                $count++;
+                $data = str_getcsv($line);
+
+                DB::table('questions')->insert([
+                    'question' => $data[0],
+                    'a' => $data[1],
+                    'b' => $data[2],
+                    'c' => $data[3],
+                    'd' => $data[4],
+                    'answer' => $data[5],
+                ]);
+            }
+            for ($i = $q->id + 1; $i <= $q->id + $count; $i++) {
+                DB::table('tqs')->insert([
+                    'tqs_test_id' => $total->test_id + 1,
+                    'tqs_question_id' => $i
+                ]);
+            }
+        }
         DB::table('tests')->insert([
-            'test_id' => $total + 1,
+            'test_id' => $total->test_id + 1,
             'name' => $request->name,
             'duration' => $request->duration,
             'date' => $request->date,
@@ -182,9 +205,16 @@ class AdminController extends Controller
     //--------------Admin addtq ---------------//
     public function addtq(Request $request)
     {
-        $tests = DB::table('tests')->get();
+        $tests = DB::table('tests')->orderByDesc('date')->get();
         $items = DB::table('questions')->paginate(25);
         return view('admin.addtq', ['items' => $items, 'tests' => $tests]);
+    }
+
+    //--------------Admin addtq ---------------//
+    public function addquestions()
+    {
+        $tests = DB::table('tests')->orderByDesc('date')->limit(5)->get();
+        return view('admin.addquestions', ['tests' => $tests]);
     }
 
     //--------------Admin analytics ---------------//
@@ -201,14 +231,24 @@ class AdminController extends Controller
     public function savetq(Request $request)
     {
         $qids = $request->qid;
-        foreach ($qids as $qid) {
-            DB::table('tqs')->insert([
-                'tqs_test_id' => $request->tid,
-                'tqs_question_id' => $qid,
-            ]);
+        if (!empty($qids)) {
+            foreach ($qids as $qid) {
+                if (DB::table('tqs')
+                    ->where('tqs_test_id', $request->tid,)
+                    ->where('tqs_question_id', $qid,)->exists()
+                ) {
+                    continue;
+                }
+                DB::table('tqs')->insert([
+                    'tqs_test_id' => $request->tid,
+                    'tqs_question_id' => $qid,
+                ]);
+            }
+            return redirect(route('admin.addtq'))
+                ->withSuccess('Questions uploaded successfully!');
         }
-        return redirect(route('admin.addtq'))
-            ->withSuccess('Questions uploaded successfully!');
+        return redirect()->back()
+            ->withErrors(['No questions selected']);
     }
 
     //--------------Admin Profile ---------------//
@@ -216,10 +256,11 @@ class AdminController extends Controller
     {
         $file = $request->file('file');
         $fileContents = file($file->getPathname());
-
+        $count = 0;
         foreach ($fileContents as $line) {
+            $count++;
             $data = str_getcsv($line);
-
+            
             DB::table('questions')->insert([
                 'question' => $data[0],
                 'a' => $data[1],
@@ -228,6 +269,15 @@ class AdminController extends Controller
                 'd' => $data[4],
                 'answer' => $data[5],
             ]);
+        }
+        $q = DB::table('questions')->orderByDesc('id')->first();
+        if ($request->test_id) {
+            for ($i = $q->id-$count + 1; $i <= $q->id; $i++) {
+                DB::table('tqs')->insert([
+                    'tqs_test_id' => $request->test_id,
+                    'tqs_question_id' => $i
+                ]);
+            }
         }
         return redirect(route('admin.addquestions'))
             ->withSuccess('Questions uploaded successfully!');

@@ -22,9 +22,9 @@
         <form action="{{ route('student.signin') }}" method="post">
             @csrf
             <div class="form-outline form-white mb-4">
-                <input type="text" id="typeroll_noX" placeholder="Muit Roll No." class="form-control form-control-lg"
-                    name="roll_no" />
-                {{-- <label class="form-label" for="typeroll_noX">Roll No</label> --}}
+                <input type="email" id="typeroll_noX" placeholder="Email" class="form-control form-control-lg"
+                    name="email" />
+                {{-- <label class="form-label" for="typeroll_noX">Email</label> --}}
             </div>
 
             <div class="form-outline form-white mb-4">

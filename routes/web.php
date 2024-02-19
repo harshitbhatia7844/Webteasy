@@ -65,7 +65,7 @@ Route::prefix('/admin')->name('admin.')
             Route::post('/savetq', 'savetq')->name('savetq');
             Route::view('/404', 'admin.404')->name('404');
             Route::get('/addtq', 'addtq')->name('addtq');
-            Route::view('/addquestions', 'admin.addquestions')->name('addquestions');
+            Route::get('/addquestions', 'addquestions')->name('addquestions');
             Route::view('/createtest', 'admin.createtest')->name('createtest');
         });
 

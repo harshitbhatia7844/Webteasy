@@ -20,7 +20,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{ route('admin.addtest') }}" method="post">
+                    <form action="{{ route('admin.addtest') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card mb-5" style="border-radius: 15px;">
                             <div class="card-body">
@@ -109,6 +109,21 @@
                                     <div class="col-md-9 pe-5">
 
                                         <input class="form-control form-control-lg" type="text" name="no_of_questions" />
+
+                                    </div>
+                                </div>
+
+                                <hr class="mx-n3">
+                                
+                                <div class="row align-items-center pt-4 pb-3">
+                                    <div class="col-md-3 ps-5">
+
+                                        <h6 class="mb-0">Upload CSV file(optional)</h6>
+
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+
+                                        <input class="form-control form-control-lg" type="file" name="file" />
 
                                     </div>
                                 </div>

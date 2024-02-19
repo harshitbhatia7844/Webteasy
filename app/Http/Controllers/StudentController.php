@@ -16,7 +16,7 @@ class StudentController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'roll_no' => 'required',
+            'email' => 'required',
             'password' => 'required'
         ]);
 
@@ -125,7 +125,7 @@ class StudentController extends Controller
             ->where('test_id', $request->test_id)
             ->where('student_roll_no', $user->roll_no)->first();
         $average = DB::table('results')
-        ->where('test_id', $request->test_id)->average('total_score');
+            ->where('test_id', $request->test_id)->average('total_score');
         return view('student.analytics', compact('items', 'average'));
     }
 
@@ -220,7 +220,9 @@ class StudentController extends Controller
         }
         $test = DB::table('tests')->where('test_id', $request->test_id)->first();
         if (now()->gte(Carbon::parse($test->start_time)) && now()->lt(Carbon::parse($test->end_time))) {
-            $questions = DB::table('questions')
+            $questions = DB::table('questions as q')
+                ->join('tqs', 'q.id', 'tqs.tqs_question_id')
+                ->where('tqs_test_id', $request->test_id)
                 ->inRandomOrder()
                 ->limit($test->no_of_questions)->get();
             $a = Carbon::parse($test->end_time)->getTimestampMs();

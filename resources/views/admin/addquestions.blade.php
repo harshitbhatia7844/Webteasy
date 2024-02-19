@@ -24,6 +24,25 @@
                         @csrf
                         <div class="card mb-5" style="border-radius: 15px;">
                             <div class="card-body">
+                                <div class="row align-items-center pt-4 pb-3">
+                                    <div class="col-md-3 ps-5">
+
+                                        <h6 class="mb-0">Test(optional)</h6>
+
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+
+                                        <select name="test_id" class="form-control form-control-lg" id="">
+                                            <option>Select Test</option>
+                                            @foreach ($tests as $test)
+                                                <option value="{{ $test->test_id }}">{{ $test->name }} on {{ $test->date }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <hr class="mx-n3">
                                 
                                 <div class="row align-items-center pt-4 pb-3">
                                     <div class="col-md-3 ps-5">
