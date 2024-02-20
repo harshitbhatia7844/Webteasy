@@ -229,7 +229,7 @@
             data: {
                 labels: ["Below 0", "0-5", "5-10", "10-15", "15-20", "20-25", "25-30"],
                 datasets: [{
-                    label: "Revenue",
+                    label: "Students",
                     backgroundColor: "#4e73df",
                     hoverBackgroundColor: "#2e59d9",
                     borderColor: "#4e73df",
@@ -298,7 +298,7 @@
                     callbacks: {
                         label: function(tooltipItem, chart) {
                             var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                            return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
                         }
                     }
                 },

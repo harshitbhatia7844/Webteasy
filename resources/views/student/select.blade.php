@@ -7,7 +7,9 @@
             <section id="instructions" class="mt-4">
                 <h2 class="mb-4">Instructions</h2>
                 <ul class="list-group">
-                    <li class="list-group-item"><h6 id="timer"></h6></li>
+                    <li class="list-group-item">
+                        <h6 id="timer"></h6>
+                    </li>
                     <li class="list-group-item">This test is only MCQ based.</li>
                     <li class="list-group-item">Only one correct answer for each question.</li>
                     <li class="list-group-item">The test shall consists of {{ $test->no_of_questions }} questions with time
