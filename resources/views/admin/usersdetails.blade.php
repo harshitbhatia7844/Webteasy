@@ -13,6 +13,7 @@
             border-collapse: collapse;
             margin: 50px auto;
         }
+
         th {
             background: #cecece;
             font-weight: bold;
@@ -32,11 +33,16 @@
 <body>
 
     <div style="width: 95%; margin: 0 auto;">
-        <div style="width: 50%; float: left;">
-            <h4>Test Result</h4>
+        <div style="width: 100%;float: left;text-align:center;">
+            <h3>MAHARISHI UNIVERSITY OF INFORMATION TECHNOLOGY, NOIDA</h3>
+            <h4>School of Engineering and Technology</h4>
+            <div style="display:flex; justify-content:space-between;">
+            <h5>Test Name: {{ $tests->name ?? 'N/A' }}</h5>
+            <h5>Test Date: {{ $tests->date ?? 'N/A' }}</h5>
+            </div>
         </div>
     </div>
-
+    <div style="clear:both;"></div>
     <table>
         <thead>
             <tr>

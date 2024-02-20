@@ -260,7 +260,7 @@ class AdminController extends Controller
         foreach ($fileContents as $line) {
             $count++;
             $data = str_getcsv($line);
-            
+
             DB::table('questions')->insert([
                 'question' => $data[0],
                 'a' => $data[1],
@@ -272,7 +272,7 @@ class AdminController extends Controller
         }
         $q = DB::table('questions')->orderByDesc('id')->first();
         if ($request->test_id) {
-            for ($i = $q->id-$count + 1; $i <= $q->id; $i++) {
+            for ($i = $q->id - $count + 1; $i <= $q->id; $i++) {
                 DB::table('tqs')->insert([
                     'tqs_test_id' => $request->test_id,
                     'tqs_question_id' => $i
@@ -294,7 +294,12 @@ class AdminController extends Controller
             ->join('students as s', 'r.student_roll_no', 's.roll_no')
             ->orderByDesc('total_score')
             ->get();
-        $pdf = FacadePDF::loadView('admin.usersdetails', array('items' =>  $users))
+        $tests = ($request->test_id)
+            ? DB::table('tests')->where('test_id', $request->test_id)->first()
+            :  NULL;
+
+            // dd(compact('users','tests'));
+        $pdf = FacadePDF::loadView('admin.usersdetails', array('items' =>  $users, 'tests' => $tests))
             ->setPaper('a4', 'portrait');
 
         return $pdf->download('students-result' . now() . '.pdf');
