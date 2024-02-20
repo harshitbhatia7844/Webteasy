@@ -285,7 +285,7 @@ class StudentController extends Controller
         ]);
         if ($user = Student::where('email', $request->email)->first()) {
             if ($request->dob == $user->dob) {
-                DB::table('students')->update([
+                DB::table('students')->where('email', $request->email)->update([
                     'password' => Hash::make($request->newpassword),
                 ]);
                 return redirect(route('student.login'))

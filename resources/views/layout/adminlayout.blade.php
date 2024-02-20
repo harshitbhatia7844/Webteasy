@@ -122,7 +122,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Settings</h6>
-                        <a class="collapse-item" href={{ route('admin.404') }}>Settings</a>
+                        {{-- <a class="collapse-item" href={{ route('admin.404') }}>Settings</a> --}}
                         <a class="collapse-item" href={{ route('admin.profile') }}>Porfile</a>
                         <hr>
                         <a class="collapse-item" href={{ route('admin.logout') }}>Logout</a>
