@@ -35,10 +35,7 @@
 
         .watermark {
             opacity: 0.5;
-            color: BLACK;
-            position: fixed;
-            top: auto;
-            left: 80%;
+            right: 0%;
         }
     </style>
 

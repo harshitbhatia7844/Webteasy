@@ -32,6 +32,23 @@
         </div>
     </div>
     <script>
+        document.onkeydown = function(e) {
+            return false;
+        }
+        document.addEventListener('keydown', event => {
+            event.preventDefault();
+            return false;
+        });
+
+        if (document.addEventListener) {
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            }, false);
+        } else {
+            document.attachEvent('oncontextmenu', function() {
+                window.event.returnValue = false;
+            });
+        }
         // Set the date we're counting down to
         var countDownDate = new Date().getTime() + 1000 * 60 * {{ $test->duration }}; // timer in minutes
 

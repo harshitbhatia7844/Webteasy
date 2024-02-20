@@ -35,7 +35,8 @@
                                         Type: MCQ
                                     </div>
                                 </div>
-                                <label class="type m-2 px-3 py-2 btn btn-outline-secondary" for="optionclear{{ $count }}">
+                                <label class="type m-2 px-3 py-2 btn btn-outline-secondary"
+                                    for="optionclear{{ $count }}">
                                     Clear Response
                                 </label>
                             </div>
@@ -45,7 +46,7 @@
                             </div>
                             <div class="options">
                                 <div class="optn my-3" onclick="selectOption({{ $count }})">
-                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}" >
+                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}">
                                         <div class="op">1</div>
                                         {{ $q->a }}
                                     </label>
@@ -53,7 +54,7 @@
                                         id="option{{ $label++ }}" value="a">
                                 </div>
                                 <div class="optn my-3" onclick="selectOption({{ $count }})">
-                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}" >
+                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}">
                                         <div class="op">2</div>
                                         {{ $q->b }}
                                     </label>
@@ -61,7 +62,7 @@
                                         id="option{{ $label++ }}" value="b">
                                 </div>
                                 <div class="optn my-3" onclick="selectOption({{ $count }})">
-                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}" >
+                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}">
                                         <div class="op">3</div>
                                         {{ $q->c }}
                                     </label>
@@ -69,7 +70,7 @@
                                         id="option{{ $label++ }}" value="c">
                                 </div>
                                 <div class="optn my-3" onclick="selectOption({{ $count }})">
-                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}" >
+                                    <label class="w-100 d-flex align-items-center" for="option{{ $label }}">
                                         <div class="op">4</div>
                                         {{ $q->d }}
                                     </label>
@@ -105,7 +106,8 @@
                         <div class="no-series d-flex justify-content-evenly align-items-center">
                             @for ($i = 0; $i < $count; $i++)
                                 <a onclick="showQuestion({{ $i + 1 }})"
-                                    class="type text-decoration-none m-2 px-3 py-2" style="color:{{$i?'black':'white'}};background:{{$i?'':'#e04943'}}"
+                                    class="type text-decoration-none m-2 px-3 py-2"
+                                    style="color:{{ $i ? 'black' : 'white' }};background:{{ $i ? '' : '#e04943' }}"
                                     id="btn{{ $i + 1 }}">
                                     {{ $i + 1 }}
                                 </a>
@@ -125,6 +127,23 @@
         </div>
     </form>
     <script>
+        document.onkeydown = function(e) {
+            return false;
+        }
+        document.addEventListener('keydown', event => {
+            event.preventDefault();
+            return false;
+        });
+
+        if (document.addEventListener) {
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            }, false);
+        } else {
+            document.attachEvent('oncontextmenu', function() {
+                window.event.returnValue = false;
+            });
+        }
         // Set the date we're counting down to
         var countDownDate = new Date().getTime() + 1000 * 60 * {{ $test->duration }}; // timer in minutes
 
