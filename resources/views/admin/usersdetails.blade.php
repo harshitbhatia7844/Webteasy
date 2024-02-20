@@ -26,19 +26,34 @@
             text-align: left;
             font-size: 14px;
         }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .watermark {
+            opacity: 0.5;
+            color: BLACK;
+            position: fixed;
+            top: auto;
+            left: 80%;
+        }
     </style>
 
 </head>
 
 <body>
 
-    <div style="width: 95%; margin: 0 auto;">
-        <div style="width: 100%;float: left;text-align:center;">
-            <h3>MAHARISHI UNIVERSITY OF INFORMATION TECHNOLOGY, NOIDA</h3>
-            <h4>School of Engineering and Technology</h4>
-            <div style="display:flex; justify-content:space-between;">
-            <h5>Test Name: {{ $tests->name ?? 'N/A' }}</h5>
-            <h5>Test Date: {{ $tests->date ?? 'N/A' }}</h5>
+    <div style="width: 95%; margin: 0; padding: 0">
+        <div style="width: 100%;text-align:center;">
+            <img src="images/muitlogo.jpg" style="height: 85">
+            <h3>MAHARISHI UNIVERSITY OF INFORMATION TECHNOLOGY,<br> NOIDA</h3>
+            <h3>School of Engineering and Technology</h3>
+            <div class="flex">
+                <span style="margin-right: 30%">Test Name: {{ $tests->name ?? 'N/A' }}</span>
+                <span>Date: {{ $tests->date ?? 'N/A' }}</span>
             </div>
         </div>
     </div>
@@ -63,6 +78,7 @@
             @endforeach
         </tbody>
     </table>
+    <div class="watermark">Created by : HPS</div>
 
 </body>
 

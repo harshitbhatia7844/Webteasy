@@ -297,8 +297,6 @@ class AdminController extends Controller
         $tests = ($request->test_id)
             ? DB::table('tests')->where('test_id', $request->test_id)->first()
             :  NULL;
-
-            // dd(compact('users','tests'));
         $pdf = FacadePDF::loadView('admin.usersdetails', array('items' =>  $users, 'tests' => $tests))
             ->setPaper('a4', 'portrait');
 
