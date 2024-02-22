@@ -35,6 +35,7 @@
 
         .watermark {
             opacity: 0.5;
+            position: absolute;
             right: 0%;
         }
     </style>
@@ -50,7 +51,7 @@
             <h3>School of Engineering and Technology</h3>
             <div class="flex">
                 <span style="margin-right: 30%">Test Name: {{ $tests->name ?? 'N/A' }}</span>
-                <span>Date: {{ $tests->date ?? 'N/A' }}</span>
+                <span>Date: {{ date('d-m-Y', strtotime($tests->date)) ?? 'N/A' }}</span>
             </div>
         </div>
     </div>
@@ -69,7 +70,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->roll_no }}</td>
-                    <td>{{ $item->name }}</td>
+                    <td>{{ strtoupper($item->name) }}</td>
                     <td>{{ $item->total_score }}</td>
                 </tr>
             @endforeach

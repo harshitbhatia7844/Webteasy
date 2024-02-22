@@ -60,6 +60,8 @@ Route::prefix('/admin')->name('admin.')
             Route::get('/viewfeedbacks', 'viewfeedbacks')->name('viewfeedbacks');
             Route::get('/viewquestions', 'viewquestions')->name('viewquestions');
             Route::get('download-pdf', 'downloadPDF')->name('download-pdf');
+            Route::post('/updatequestion', 'updatequestion')->name('updatequestion');
+            Route::post('/updatestudent', 'updatestudent')->name('updatestudent');
             Route::post('/savequestions', 'savequestions')->name('savequestions');
             Route::post('/addtest', 'addtest')->name('addtest');
             Route::post('/savetq', 'savetq')->name('savetq');

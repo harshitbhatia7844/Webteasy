@@ -52,7 +52,7 @@ class AdminController extends Controller
         ]);
         if ($user = Admin::where('email', $request->email)->first()) {
             if (Hash::check($request->oldpassword, $user->password)) {
-                $inserted = DB::table('admins')->update([
+                $inserted = DB::table('admins')->where('id', Auth::getUser()->id)->update([
                     'password' => Hash::make($request->newpassword),
                 ]);
                 if ($inserted) {
@@ -77,7 +77,18 @@ class AdminController extends Controller
         $tests = DB::table('tests')->count();
         $feedbacks = DB::table('feedbacks')->count();
         $results = DB::table('results')->count();
-        return view('admin.index', ['students' => $students, 'tests' => $tests, 'feedbacks' => $feedbacks, 'results' => $results]);
+        $passed = DB::table('results')
+            ->whereRaw('total_score > total_questions/3')->count();
+        $failed = DB::table('results')
+            ->whereRaw('total_score <= total_questions/3')->count();
+        return view('admin.index', [
+            'students' => $students,
+            'tests' => $tests,
+            'feedbacks' => $feedbacks,
+            'results' => $results,
+            'failed' => round($failed*100/$results, 2),
+            'passed' => round($passed*100/$results, 2)
+        ]);
     }
 
     //--------------Admin Profile ---------------//
@@ -90,18 +101,23 @@ class AdminController extends Controller
     //--------------Admin feedback ---------------//
     public function viewfeedbacks(Request $request)
     {
+        $tests = DB::table('tests')->orderByDesc('date')->orderByDesc('start_time')->get();
         if ($request->test_id) {
             $items = DB::table('feedbacks as f')->where('test_id', $request->test_id)
                 ->join('students as s', 'f.student_id', 's.roll_no')
                 ->orderBy('rating')
-                ->paginate(25);
-            return view('admin.viewfeedback', ['items' => $items]);
+                ->paginate(50)->appends([
+                    'test_id' => $request->test_id,
+                ]);
+            $count = $items->firstItem();
+            return view('admin.viewfeedback', ['count' => $count, 'items' => $items, 'test_id' => $request->test_id, 'tests' => $tests]);
         }
         $items = DB::table('feedbacks as f')
             ->join('students as s', 'f.student_id', 's.roll_no')
             ->orderBy('rating')
-            ->paginate(25);
-        return view('admin.viewfeedback', ['items' => $items]);
+            ->paginate(50);
+        $count = $items->firstItem();
+        return view('admin.viewfeedback', ['count' => $count, 'items' => $items, 'tests' => $tests]);
     }
 
     //------------- Admin View All Students -------------//
@@ -112,29 +128,71 @@ class AdminController extends Controller
                 ->where('course', 'like', '%' . $request->course . '%')
                 ->where('branch', 'like', '%' . $request->branch . '%')
                 ->where('semester', 'like', '%' . $request->semester . '%')
-                ->paginate(25);
-            return view('admin.viewstudents', ['items' => $students]);
+                ->paginate(50)->appends([
+                    'course' => $request->course,
+                    'branch' => $request->branch,
+                    'semester' => $request->semester
+                ]);
+            $count = $students->firstItem();
+            return view('admin.viewstudents', ['count' => $count, 'items' => $students, 'course' => $request->course, 'branch' => $request->branch, 'semester' => $request->semester]);
         }
-        $students = DB::table('students')->paginate(25);
-        return view('admin.viewstudents', ['items' => $students]);
+        $students = DB::table('students')->paginate(50);
+        $count = $students->firstItem();
+        return view('admin.viewstudents', ['count' => $count, 'items' => $students]);
+    }
+
+    //------------- Admin update Student Profile -------------//
+    public function updatestudent(Request $request)
+    {
+        DB::table('students')->where('id', $request->id)->update([
+            'roll_no' => $request->roll_no,
+            'name' => $request->name,
+            'email' => $request->email,
+            'mobile_no' => $request->mobile_no,
+            'gender' => $request->gender,
+            'course' => $request->course1,
+            'branch' => $request->branch1,
+            'semester' => $request->semester1,
+            'updated_at' => now()
+        ]);
+        return back()->withSuccess("Profile has been updated Successfully!");
+    }
+
+    //------------- Admin update question -------------//
+    public function updatequestion(Request $request)
+    {
+        DB::table('questions')->where('id', $request->id)->update([
+            'question' => $request->question,
+            'a' => $request->a,
+            'b' => $request->b,
+            'c' => $request->c,
+            'd' => $request->d,
+            'answer' => $request->answer,
+        ]);
+        return back()->withSuccess("Question updated Successfully!");
     }
 
     //------------- Admin View All Students -------------//
     public function viewresults(Request $request)
     {
-        $tests = DB::table('tests')->get();
+        $tests = DB::table('tests')->orderByDesc('date')->orderByDesc('start_time')->get();
         if ($request->test_id) {
             $students = DB::table('results as r')->where('test_id', $request->test_id)
                 ->join('students as s', 'r.student_roll_no', 's.roll_no')
                 ->orderByDesc('total_score')
-                ->paginate(25);
-            return view('admin.viewresults', ['items' => $students, 'test_id' => $request->test_id, 'tests' => $tests]);
+                ->paginate(50)->appends([
+                    'test_id' => $request->test_id,
+                ]);
+            $count = $students->firstItem();
+            return view('admin.viewresults', ['count' => $count, 'items' => $students, 'test_id' => $request->test_id, 'tests' => $tests]);
         }
         $students = DB::table('results as r')
             ->join('students as s', 'r.student_roll_no', 's.roll_no')
             ->orderByDesc('total_score')
-            ->paginate(25);
-        return view('admin.viewresults', ['items' => $students, 'tests' => $tests]);
+            ->where('id', -1)
+            ->paginate(50);
+        $count = $students->firstItem();
+        return view('admin.viewresults', ['count' => $count, 'items' => $students, 'tests' => $tests]);
     }
 
     //--------------Admin Profile ---------------//
@@ -142,6 +200,7 @@ class AdminController extends Controller
     {
         $tests = DB::table('tests')
             ->orderByDesc('date')
+            ->orderByDesc('start_time')
             ->get();
         return view('admin.viewtest', ['tests' => $tests]);
     }
@@ -149,15 +208,19 @@ class AdminController extends Controller
     //--------------Admin Profile ---------------//
     public function viewquestions(Request $request)
     {
-        $tests = DB::table('tests')->get();
+        $tests = DB::table('tests')->orderByDesc('date')->orderByDesc('start_time')->get();
         if ($request->test_id) {
             $items = DB::table('tqs')
                 ->join('questions as q', 'tqs.tqs_question_id', 'q.id')
-                ->where('tqs_test_id', $request->test_id)->paginate(25);
-            return view('admin.viewquestions', ['items' => $items, 'tests' => $tests]);
+                ->where('tqs_test_id', $request->test_id)->paginate(50)->appends([
+                    'test_id' => $request->test_id,
+                ]);
+            $count = $items->firstItem();
+            return view('admin.viewquestions', ['count' => $count, 'items' => $items, 'test_id' => $request->test_id, 'tests' => $tests]);
         }
-        $items = DB::table('questions')->paginate(25);
-        return view('admin.viewquestions', ['items' => $items, 'tests' => $tests]);
+        $items = DB::table('questions')->paginate(50);
+        $count = $items->firstItem();
+        return view('admin.viewquestions', ['count' => $count, 'items' => $items, 'tests' => $tests]);
     }
 
     //--------------Admin Profile ---------------//
@@ -197,6 +260,8 @@ class AdminController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'no_of_questions' => $request->no_of_questions,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
         return redirect(route('admin.createtest'))
             ->withSuccess('Test has been created successfully!');
@@ -207,7 +272,8 @@ class AdminController extends Controller
     {
         $tests = DB::table('tests')->orderByDesc('date')->get();
         $items = DB::table('questions')->paginate(25);
-        return view('admin.addtq', ['items' => $items, 'tests' => $tests]);
+        $count = $items->firstItem();
+        return view('admin.addtq', ['count' => $count, 'items' => $items, 'tests' => $tests]);
     }
 
     //--------------Admin addtq ---------------//

@@ -1,6 +1,6 @@
 @extends('layout.adminlayout')
 @section('content')
-    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <h2 class="text-primary">Assign Questions to Test</h2>
     <form action="{{ route('admin.savetq') }}" method="post">
         @csrf
@@ -38,7 +38,7 @@
                                 <tr>
                                     <td><input class="form-control m-1" type='checkbox' name='qid[]'
                                             value='{{ $item->id }}' /></td>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $count++ }}</td>
                                     <td>{{ $item->question }}</td>
                                     <td>{{ $item->a }}</td>
                                     <td>{{ $item->b }}</td>

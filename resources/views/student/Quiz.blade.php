@@ -127,6 +127,16 @@
         </div>
     </form>
     <script>
+        var x = 0;
+        document.addEventListener('visibilitychange', function(event) {
+            if (document.hidden) {
+                    ++x;
+                console.log('not visible');
+                console.log(x);
+            } else {
+                console.log('is visible');
+            }
+        });
         document.onkeydown = function(e) {
             return false;
         }

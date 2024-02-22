@@ -19,20 +19,21 @@
                             <th>End Time</th>
                             <th>Duration</th>
                             <th>Questions</th>
-                            <th>View  Results</th>
+                            <th>View Results</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($tests as $item)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->date }}</td>
                                 <td>{{ $item->start_time }}</td>
                                 <td>{{ $item->end_time }}</td>
                                 <td>{{ $item->duration }}</td>
                                 <td>{{ $item->no_of_questions }}</td>
-                                <td><a href="{{route('admin.viewresults')}}?test_id={{$item->test_id}}">View Result</a></td>
+                                <td><a href="{{ route('admin.viewresults') }}?test_id={{ $item->test_id }}">View Result</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

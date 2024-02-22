@@ -8,7 +8,7 @@
                 <h2 class="mb-4">Instructions</h2>
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <h6 id="timer"></h6>
+                        <h3 id="timer"></h3>
                     </li>
                     <li class="list-group-item">This test is only MCQ based.</li>
                     <li class="list-group-item">Only one correct answer for each question.</li>

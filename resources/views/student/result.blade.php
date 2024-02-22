@@ -7,7 +7,7 @@
                     <div class="panel-heading m-3">
                         <h1 class="text-center m-2">Your Exam Scorecard</h1>
                     </div>
-                    <div class="panel-body text-center" style="">
+                    <div class="panel-body text-center">
                         <ul class="list-group mb-5">
                             <li class="list-group-item">
                                 <h4 style="color:#069;">Course : <span style="color:#000;">BTECH/Diploma/BCA
@@ -18,6 +18,10 @@
                             <li class="list-group-item">
                                 <h4><span style="color:#069;">Total Question</span> :
                                     {{ $r->total_questions }}</h4>
+                            </li>
+                            <li class="list-group-item">
+                                <h4><span style="color:#069;">Total Time Taken</span> :
+                                    {{ $time_taken }}</h4>
                             </li>
                             <li class="list-group-item">
                                 <h4><span style="color:#069;">You Attempted</span> :
@@ -37,7 +41,7 @@
                             </li>
                             <li class="list-group-item">
                                 <h4><span style="color:#069;">Result</span> :
-                                    @if ($r->total_score >= 12)
+                                    @if ($r->total_score >= $r->total_questions/3)
                                         <span class="text-success">You Passed</span>
                                     @else
                                         <span class="text-danger">You Failed</span>

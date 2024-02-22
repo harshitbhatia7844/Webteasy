@@ -22,10 +22,12 @@
                 <div class="card-header d-flex justify-content-between align-items-center"
                     id="testHeader{{ $activeTest->test_id }}">
                     <h3 class="fw-bold mb-0" id="testName{{ $activeTest->test_id }}">{{ $activeTest->name }}</h3>
-                    @if ($activeTest->date == now()->toDateString())
+                    @if ($activeTest->date == now()->toDateString() && $activeTest->end_time >= now()->toTimeString())
                         <a href="{{ route('student.select') }}?test_id={{ $activeTest->test_id }}"
                             class="btn btn-primary start-quiz-btn" data-test-id="{{ $activeTest->test_id }}">Start
                             Quiz</a>
+                    @elseif ($activeTest->date == now()->toDateString() && $activeTest->end_time < now()->toTimeString())
+                        <p class="btn btn-danger start-quiz-btn" data-test-id="{{ $activeTest->test_id }}">Expired</p>
                     @elseif ($activeTest->date >= now()->toDateString())
                         <p class="btn btn-warning start-quiz-btn" data-test-id="{{ $activeTest->test_id }}">Upcomming</p>
                     @elseif ($activeTest->date <= now()->toDateString())
@@ -50,8 +52,10 @@
                         </div>
                     </div>
                     <div class="time">
-                        @if ($activeTest->date == now()->toDateString())
+                        @if ($activeTest->date == now()->toDateString() && $activeTest->end_time >= now()->toTimeString())
                             <span id="timer{{ $activeTest->test_id }}"></span>
+                        @elseif ($activeTest->date == now()->toDateString() && $activeTest->end_time < now()->toTimeString())
+                            <p data-test-id="{{ $activeTest->test_id }}">Expired</p>
                         @elseif ($activeTest->date >= now()->toDateString())
                             <p data-test-id="{{ $activeTest->test_id }}">Upcomming</p>
                         @elseif ($activeTest->date <= now()->toDateString())

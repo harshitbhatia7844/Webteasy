@@ -42,8 +42,22 @@ class StudentController extends Controller
     public function dashboard()
     {
         $tests = DB::table('results')
-            ->where('student_roll_no', Auth::getUser()->roll_no)->count();
-        return view('student.index', compact('tests'));
+            ->where('student_roll_no', Auth::getUser()->roll_no)->get();
+        $test_count = $tests->count();
+        $passed = DB::table('results')
+            ->where('student_roll_no', Auth::getUser()->roll_no)
+            ->whereRaw('total_score > total_questions/3')->count();
+        $count = 0;
+        foreach ($tests as $test) {
+            $top3 = DB::table('results')
+                ->where('test_id', $test->test_id)->orderByDesc('total_score')->limit(3)->get();
+            foreach ($top3 as $top) {
+                if ($top->student_roll_no == Auth::getUser()->roll_no) {
+                    $count += 1;
+                }
+            }
+        }
+        return view('student.index', compact('test_count', 'passed', 'count'));
     }
 
     //------------- Student Profile -------------//
@@ -56,7 +70,6 @@ class StudentController extends Controller
     //------------- Student Profile -------------//
     public function updateprofile(Request $request)
     {
-        $user = Auth::getUser();
         DB::table('students')->where('roll_no', Auth::getUser()->roll_no)->update([
             'roll_no' => $request->roll_no,
             'name' => $request->name,
@@ -81,6 +94,9 @@ class StudentController extends Controller
             return back()->withErrors(["Test Already Submited"]);
         }
         $test = DB::table('tests')->where('test_id', $request->test_id)->first();
+        if (now()->gt(Carbon::parse($test->end_time))) {
+            return back()->withErrors(["Test Has Expired"]);
+        }
         $a = Carbon::parse($test->start_time)->getTimestampMs();
         return view('student.select', ['test' => $test, 'a' => $a]);
     }
@@ -137,7 +153,7 @@ class StudentController extends Controller
 
         $activeTests = DB::table('tests')
             ->where('date', '<=', $currentDate)
-            ->orderByDesc('date')
+            ->orderByDesc('date')->orderByDesc('start_time')->orderByDesc('end_time')
             ->limit(5)->get();
         return view('student.viewtests', compact('activeTests'));
     }
@@ -195,19 +211,23 @@ class StudentController extends Controller
                 ->first();
             $total = DB::table('results')
                 ->where('test_id', '=', $request->test_id)->count();
+            $time_taken = strtotime($result->updated_at) - strtotime($result->created_at);
             return view('student.result', [
                 'r' => $result,
                 's' => 1,
                 'total' => $total,
+                'time_taken' => round($time_taken / 60, 0) .' min ' .$time_taken % 60 . ' sec',
                 'test_id' => $request->test_id
             ]);
         }
         $total = DB::table('results')
             ->where('test_id', '=', $request->test_id)->count();
+        $time_taken = strtotime($result->updated_at) - strtotime($result->created_at);
         return view('student.result', [
             'r' => $result,
             's' => 0,
             'total' => $total,
+            'time_taken' => round($time_taken / 60, 0) .' min ' .$time_taken % 60 . ' sec',
             'test_id' => $request->test_id
         ]);
     }
@@ -265,7 +285,7 @@ class StudentController extends Controller
             'semester' => $request->semester,
             'password' => Hash::make($request->password),
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
         ]);
         if ($inserted) {
             return redirect(route('student.login'))
@@ -287,6 +307,7 @@ class StudentController extends Controller
             if ($request->dob == $user->dob) {
                 DB::table('students')->where('email', $request->email)->update([
                     'password' => Hash::make($request->newpassword),
+                    'updated_at' => now()
                 ]);
                 return redirect(route('student.login'))
                     ->withSuccess('Your Password have been Updated successfully!');
