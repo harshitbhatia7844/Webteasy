@@ -28,13 +28,13 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar toggled sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
                 href="{{ route('student.dashboard') }}">
                 <div class="sidebar-brand-icon ">
-                    <img src="../images/logo.png" alt="" style="height: 5.5rem">
+                    <img src="../images/1logo.png" alt="" style="height: 5.5rem">
                 </div>
                 {{-- <div class="sidebar-brand-text mx-3">Student</div> --}}
             </a>
