@@ -35,7 +35,7 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
                 href="{{ route('admin.dashboard') }}">
                 <div class="sidebar-brand-icon">
-                    <img src="{{ asset('images/logo.png') }}" alt="" style="height: 5.5rem">
+                    <img src="{{ asset('images/1logo.png') }}" alt="" style="height: 5.5rem">
                 </div>
                 {{-- <div class="sidebar-brand-text mx-3">Admin</div> --}}
             </a>
