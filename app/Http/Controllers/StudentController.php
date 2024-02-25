@@ -142,7 +142,9 @@ class StudentController extends Controller
             ->where('student_roll_no', $user->roll_no)->first();
         $average = DB::table('results')
             ->where('test_id', $request->test_id)->average('total_score');
-        return view('student.analytics', compact('items', 'average'));
+        $time_taken = strtotime($items->updated_at) - strtotime($items->created_at);
+        $time_taken = round($time_taken / 60, 0) .' min ' .$time_taken % 60 . ' sec';
+        return view('student.analytics', compact('items', 'average', 'time_taken'));
     }
 
     //------------- Student view all tests -------------//

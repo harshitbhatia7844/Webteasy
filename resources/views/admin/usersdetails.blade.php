@@ -31,6 +31,7 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
+            margin-bottom: 10px;
         }
 
         .watermark {
@@ -53,9 +54,12 @@
                 <span style="margin-right: 30%">Test Name: {{ $tests->name ?? 'N/A' }}</span>
                 <span>Date: {{ date('d-m-Y', strtotime($tests->date)) ?? 'N/A' }}</span>
             </div>
+            <div class="flex">
+                <span style="margin-right: 35%">Max Score: {{ $tests->no_of_questions ?? 'N/A' }}</span>
+                <span>Duration: {{ $tests->duration ?? 'N/A' }} min</span>
+            </div>
         </div>
     </div>
-    <div style="clear:both;"></div>
     <table>
         <thead>
             <tr>
@@ -67,12 +71,12 @@
         </thead>
         <tbody>
             @foreach ($items as $item)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->roll_no }}</td>
-                    <td>{{ strtoupper($item->name) }}</td>
-                    <td>{{ $item->total_score }}</td>
-                </tr>
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $item->roll_no }}</td>
+                <td>{{ strtoupper($item->name) }}</td>
+                <td>{{ $item->total_score }}</td>
+            </tr>
             @endforeach
         </tbody>
     </table>
