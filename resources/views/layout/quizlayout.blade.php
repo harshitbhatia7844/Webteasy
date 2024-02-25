@@ -11,9 +11,9 @@
     <nav class="navbar bg-primary">
         <div class="container-fluid mx-5">
             <a class="navbar-brand text-white" href="#">
-                Online Quiz System
+                Online Assessment Software by HPS
             </a>
-            <p class="nav-link text-white">{{ Auth::user()->name }}</p>
+            <h4 class="nav-item text-white">{{ Auth::user()->name }}</h4>
         </div>
     </nav>
     @yield('content')

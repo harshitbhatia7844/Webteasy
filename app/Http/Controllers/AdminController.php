@@ -86,8 +86,8 @@ class AdminController extends Controller
             'tests' => $tests,
             'feedbacks' => $feedbacks,
             'results' => $results,
-            'failed' => round($failed*100/$results, 2),
-            'passed' => round($passed*100/$results, 2)
+            'failed' => round($failed * 100 / $results, 2),
+            'passed' => round($passed * 100 / $results, 2)
         ]);
     }
 
@@ -286,11 +286,25 @@ class AdminController extends Controller
     //--------------Admin analytics ---------------//
     public function analytics(Request $request)
     {
+        $results = DB::table('results')
+            ->where('test_id', $request->test_id)
+            ->where('student_roll_no', $request->student_id)->first();
+        $test = DB::table('tests')->where('test_id', $request->test_id)->first();
+        $average = DB::table('results')
+            ->where('test_id', $request->test_id)->average('total_score');
+        $time_taken = strtotime($results->updated_at) - strtotime($results->created_at);
+        $time_taken = round($time_taken / 60, 0) . ' min ' . $time_taken % 60 . ' sec';
         $items = DB::table('q_attempts as a')
             ->join('questions as q', 'a.question_id', 'q.id')
             ->where('test_id', $request->test_id)
             ->where('student_id', $request->student_id)->get();
-        return view('admin.analytics', ['items' => $items]);
+        return view('admin.analytics', [
+            'items' => $items,
+            'results' => $results,
+            'time_taken' => $time_taken,
+            'test' => $test,
+            'average' => $average
+        ]);
     }
 
     //--------------Admin Profile ---------------//

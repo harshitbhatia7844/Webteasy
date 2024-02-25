@@ -140,11 +140,12 @@ class StudentController extends Controller
         $items = DB::table('results')
             ->where('test_id', $request->test_id)
             ->where('student_roll_no', $user->roll_no)->first();
+        $test = DB::table('tests')->where('test_id', $request->test_id)->first();
         $average = DB::table('results')
             ->where('test_id', $request->test_id)->average('total_score');
         $time_taken = strtotime($items->updated_at) - strtotime($items->created_at);
         $time_taken = round($time_taken / 60, 0) .' min ' .$time_taken % 60 . ' sec';
-        return view('student.analytics', compact('items', 'average', 'time_taken'));
+        return view('student.analytics', compact('items', 'average', 'time_taken', 'test'));
     }
 
     //------------- Student view all tests -------------//
@@ -164,6 +165,7 @@ class StudentController extends Controller
     public function result(Request $request)
     {
         $user = Auth::getUser();
+        $test = DB::table('tests')->where('test_id', $request->test_id)->first();
         $result = DB::table('results')
             ->where('student_roll_no', '=', $user->roll_no)
             ->where('test_id', '=', $request->test_id)
@@ -218,8 +220,8 @@ class StudentController extends Controller
                 'r' => $result,
                 's' => 1,
                 'total' => $total,
-                'time_taken' => round($time_taken / 60, 0) .' min ' .$time_taken % 60 . ' sec',
-                'test_id' => $request->test_id
+                'time_taken' => round($time_taken / 60, 0) .'Min ' .$time_taken % 60 . 'Sec',
+                'test' => $test
             ]);
         }
         $total = DB::table('results')
@@ -229,8 +231,8 @@ class StudentController extends Controller
             'r' => $result,
             's' => 0,
             'total' => $total,
-            'time_taken' => round($time_taken / 60, 0) .' min ' .$time_taken % 60 . ' sec',
-            'test_id' => $request->test_id
+            'time_taken' => round($time_taken / 60, 0) .'Min ' .$time_taken % 60 . 'Sec',
+            'test' => $test
         ]);
     }
 

@@ -26,109 +26,97 @@
     </script>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Test Analytics</h1>
-    </div>
-    <!-- Content Row -->
-    <div class="row">
-        
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Questions</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ $items->total_questions }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Your Score</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ $items->total_score }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Time Taken
-                            </div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $time_taken }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Result</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $items->total_score > $items->total_questions/3 ?'Passed':'Failed' }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h1 class="h3 mb-0 text-gray-800">Analytics - {{ $test->name }}</h1>
     </div>
 
     <div class="container-fluid">
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Questions</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ $items->total_questions }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Your Score</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ $items->total_score }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Time Taken
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $time_taken }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Result</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ $items->total_score > $items->total_questions / 3 ? 'Passed' : 'Failed' }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Content Row -->
         <div class="row">
 
             <div class="col-xl-8 col-lg-7">
 
-                <!-- Bar Chart -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-bar">
-                            <canvas id="myBarChart"></canvas>
-                        </div>
-                        <hr>
-                        No. of Students and Marks
-                    </div>
-                </div>
-                <!-- Bar Chart -->
+                <!-- Pie Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Pie Chart</h6>
@@ -141,22 +129,22 @@
                         No. of Questions
                     </div>
                 </div>
+
             </div>
 
             <!-- Donut Chart -->
             <div class="col-xl-4 col-lg-5">
+                <!-- Bar Chart -->
                 <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
                     </div>
-                    <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-pie pt-4">
-                            <canvas id="myPieChart"></canvas>
+                        <div class="chart-bar">
+                            <canvas id="myBarChart"></canvas>
                         </div>
                         <hr>
-                        Test Analysis
+                        Your Score Vs Average Score
                     </div>
                 </div>
             </div>
@@ -167,46 +155,6 @@
     <!-- Page level plugins -->
     <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
     <script>
-        // Set new default font family and font color to mimic Bootstrap's default styling
-        Chart.defaults.global.defaultFontFamily = 'Nunito',
-            '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        Chart.defaults.global.defaultFontColor = '#858796';
-
-        // Pie Chart Example
-        var ctx = document.getElementById("myPieChart");
-        var myPieChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ["Correct", "Wrong", "Not attempted"],
-                datasets: [{
-                    data: [{{ $items->correct }}, {{ $items->wrong }},
-                        {{ $items->total_questions - $items->attemted }}
-                    ],
-                    backgroundColor: ['#1cc88a', '#e3332d', '#e3b94f'],
-                    hoverBackgroundColor: ['#17a673', '#cc130c', '#e3ae27'],
-                    hoverBorderColor: "rgba(234, 236, 244, 1)",
-                }],
-            },
-            options: {
-                maintainAspectRatio: false,
-                tooltips: {
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    caretPadding: 10,
-                },
-                legend: {
-                    display: false
-                },
-                cutoutPercentage: 40,
-            },
-        });
-
-
         // Bar chart Javascript 
         // Set new default font family and font color to mimic Bootstrap's default styling
         Chart.defaults.global.defaultFontFamily = 'Nunito',
