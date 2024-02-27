@@ -5,8 +5,9 @@
         <div class="container mt-3" style="user-select: none">
             <div class="header">
                 <div class="navbar">
-                    <h2>Course : BTECH/Diploma/BCA</h2>
-                    {{-- <button class="btn btn-primary">Submit Test</button> --}}
+                    <h4>Course : BTECH/Diploma/BCA</h4>
+                    <button class="btn btn-outline-primary mb-5" onclick="confirm('You want to SUBMIT your TEST')"><b>SUBMIT
+                        TEST</b></button>
                 </div>
                 <div class="navbar px-3 m-2">
                     <h3>Paper : {{ $test->name }}</h3>
@@ -116,9 +117,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-2">
-                <button class="btn btn-primary mb-5" onclick="confirm('You want to SUBMIT your TEST')"><b>SUBMIT
-                        TEST</b></button>
+            <div class="d-flex justify-content-center mt-2"> 
                 <input type="hidden" name="start_time" value="{{ $now }}">
                 <input type="hidden" name="count" value="{{ $count }}">
                 <input type="hidden" name="test_id" value="{{ $test->test_id }}">
@@ -127,12 +126,12 @@
         </div>
     </form>
     <script>
-        var x = 0;
+        var ss = 0;
         document.addEventListener('visibilitychange', function(event) {
             if (document.hidden) {
-                    ++x;
+                    ++ss;
                 console.log('not visible');
-                console.log(x);
+                console.log(ss);
             } else {
                 console.log('is visible');
             }
